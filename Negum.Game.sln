@@ -1,0 +1,18 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Negum.Game", "Negum.Game\Negum.Game.csproj", "{587199BA-D568-42E5-802A-A27B481E73AF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{068F6227-E18C-4C29-AD65-3A9B19A893D7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{587199BA-D568-42E5-802A-A27B481E73AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{587199BA-D568-42E5-802A-A27B481E73AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{587199BA-D568-42E5-802A-A27B481E73AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{587199BA-D568-42E5-802A-A27B481E73AF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
