@@ -1,4 +1,6 @@
 using System.IO;
+using System.Threading.Tasks;
+using Negum.Game.Common.Network;
 
 namespace Negum.Game.Common.Packets
 {
@@ -11,28 +13,30 @@ namespace Negum.Game.Common.Packets
     /// </author>
     public abstract class SimplePacket : IPacket
     {
-        public void Read(Stream stream)
+        public async Task ReadAsync(Stream stream)
         {
             var reader = new BinaryReader(stream);
-            this.Read(reader);
+            await this.ReadAsync(reader);
         }
 
-        public void Write(Stream stream)
+        public async Task WriteAsync(Stream stream)
         {
             var writer = new BinaryWriter(stream);
-            this.Write(writer);
+            await this.WriteAsync(writer);
         }
+        
+        public abstract Task HandleAsync(IPacketHandler handler);
 
         /// <summary>
         /// Overrides default Read method providing BinaryReader for easier Stream manipulation.
         /// </summary>
         /// <param name="reader"></param>
-        protected abstract void Read(BinaryReader reader);
+        protected abstract Task ReadAsync(BinaryReader reader);
         
         /// <summary>
         /// Overrides default Write method providing BinaryWriter for easier Stream manipulation.
         /// </summary>
         /// <param name="writer"></param>
-        protected abstract void Write(BinaryWriter writer);
+        protected abstract Task WriteAsync(BinaryWriter writer);
     }
 }

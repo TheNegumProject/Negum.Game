@@ -1,4 +1,6 @@
 using System.IO;
+using System.Threading.Tasks;
+using Negum.Game.Common.Network;
 
 namespace Negum.Game.Common.Packets
 {
@@ -17,12 +19,18 @@ namespace Negum.Game.Common.Packets
         /// Tries to read data from given input stream.
         /// </summary>
         /// <param name="stream"></param>
-        void Read(Stream stream);
+        Task ReadAsync(Stream stream);
 
         /// <summary>
         /// Tries to write data to the given output stream.
         /// </summary>
         /// <param name="stream"></param>
-        void Write(Stream stream);
+        Task WriteAsync(Stream stream);
+
+        /// <summary>
+        /// Provides a convenient way of calling appropriate handler to handle current packet.
+        /// </summary>
+        /// <param name="handler"></param>
+        Task HandleAsync(IPacketHandler handler);
     }
 }
