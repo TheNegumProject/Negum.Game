@@ -8,9 +8,4 @@
       <PackageReference Include="Negum.Core" Version="0.2021.318.1955" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Client" />
-      <Folder Include="Server" />
-    </ItemGroup>
-
 </Project>
