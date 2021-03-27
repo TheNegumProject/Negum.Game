@@ -8,6 +8,8 @@ namespace Negum.Game.Common.Packets
     /// Describes root of the Packet communication tree.
     /// Packets are used to communicate between Client and Server.
     /// Each side (Client, Server) knows about all packets but each handles them differently.
+    ///
+    /// Each IPacket implementation class must have one constructor with no arguments !!!
     /// </summary>
     /// 
     /// <author>
