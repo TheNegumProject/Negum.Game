@@ -36,6 +36,12 @@ namespace Negum.Game.Common.Network
         Task SendAsync(IPacket packet);
     }
 
+    /// <summary>
+    /// </summary>
+    /// 
+    /// <author>
+    /// https://github.com/TheNegumProject/Negum.Game
+    /// </author>
     public abstract class AbstractNetworkManager : INetworkManager
     {
         public INegumSide Side { get; }

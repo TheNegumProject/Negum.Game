@@ -24,6 +24,12 @@ namespace Negum.Game.Common.Network
         int Port { get; }
     }
 
+    /// <summary>
+    /// </summary>
+    /// 
+    /// <author>
+    /// https://github.com/TheNegumProject/Negum.Game
+    /// </author>
     public class ConnectionContext : IConnectionContext
     {
         public string Hostname { get; set; }
