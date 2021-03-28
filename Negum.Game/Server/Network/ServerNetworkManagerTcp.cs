@@ -50,7 +50,9 @@ namespace Negum.Game.Server.Network
             while (this.IsListening)
             {
                 var client = await this.Listener.AcceptTcpClientAsync();
+                
                 var stream = client.GetStream();
+                stream.ReadTimeout = int.MaxValue;
                 
                 var childTcpClientThread = new Thread(async () => await this.ProcessConnectionAsync(stream));
                 childTcpClientThread.Start();
