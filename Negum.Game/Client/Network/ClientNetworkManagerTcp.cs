@@ -38,7 +38,6 @@ namespace Negum.Game.Client.Network
             // TODO: If not yet connected, add given IPacket to some Queue and try sending it before next call.
 
             var stream = this.Client.GetStream();
-            stream.ReadTimeout = int.MaxValue;
 
             await this.SendPacketAsync(packet, stream);
 

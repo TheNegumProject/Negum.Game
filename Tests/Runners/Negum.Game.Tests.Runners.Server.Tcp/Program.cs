@@ -10,6 +10,7 @@ namespace Negum.Game.Tests.Runners.Server.Tcp
         static async Task Main(string[] args)
         {
             var server = new ServerNetworkManagerTcp(new NegumSideMock(), ConnectionContextMock.LocalHost);
+            
             await server.ConnectAsync();
             await server.DisconnectAsync();
         }

@@ -11,9 +11,14 @@ namespace Negum.Game.Tests.Runners.Client.Tcp
         {
             var client = new ClientNetworkManagerTcp(new NegumSideMock(), ConnectionContextMock.LocalHost);
             await client.ConnectAsync();
+
+            var packetsToSend = 2;
             
-            var packet = new PacketMock();
-            await client.SendAsync(packet);
+            for (var i = 0; i < packetsToSend; ++i)
+            {
+                var packet = new PacketMock();
+                await client.SendAsync(packet);
+            }
 
             await client.DisconnectAsync();
         }

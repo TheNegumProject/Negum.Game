@@ -50,9 +50,7 @@ namespace Negum.Game.Server.Network
             while (this.IsListening)
             {
                 var client = await this.Listener.AcceptTcpClientAsync();
-                
                 var stream = client.GetStream();
-                stream.ReadTimeout = int.MaxValue;
                 
                 var childTcpClientThread = new Thread(async () => await this.ProcessConnectionAsync(stream));
                 childTcpClientThread.Start();
@@ -61,9 +59,29 @@ namespace Negum.Game.Server.Network
 
         private async Task ProcessConnectionAsync(Stream stream)
         {
-            var packet = await this.ReadPacketAsync(stream);
-            await packet.HandleAsync(this.Side.PacketHandler);
-            await this.SendPacketAsync(packet, stream);
+            while (this.IsListening)
+            {
+                try
+                {
+                    var packet = await this.ReadPacketAsync(stream);
+                    await packet.HandleAsync(this.Side.PacketHandler);
+                    await this.SendPacketAsync(packet, stream);
+                }
+                catch (EndOfStreamException exception)
+                {
+                    /*
+                     * TODO: Find better / cleaner solution instead of hard try-catch
+                     * 
+                     * This point will be hit when User disconnect.
+                     * It will try to ReadPacketAsync and fail to read beyond stream end.
+                     * 
+                     * (It always pause when reading assemblyName in ReadPacketAsync, this is what's crashing
+                     * when User disconnects.)
+                     */
+                    
+                    break;
+                }
+            }
         }
     }
 }
