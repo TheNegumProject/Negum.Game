@@ -1,1 +1,60 @@
 # Negum.Game
+
+## 1. General Overview
+Negum.Game is a library which provides core functionality and main game loop for 2D fighting game engine. <br/>
+It is a higher lever wrapper around [Negum.Core](https://github.com/TheNegumProject/Negum.Core) library. <br/>
+The main purpose of this library is to provide User with a set of pre-defined tools and classes which perform the most common and repetetive tasks. <br/>
+
+### 1.1. Library structure
+TBD
+
+### 1.2. Features
+- [ ] General entities definition like Player, Team, Stage, etc.
+- [ ] Standard fight (match) definition
+- [ ] Hook - Accept User input
+- [ ] Hook - Render image / sprite
+- [ ] Hook - Play audio / music
+- [ ] Hook - Load font
+- [ ] Hook - Draw menu
+- [ ] Hook - Draw stage (background, foreground, effects)
+- [ ] Hook - Draw player (sprite, effects)
+- [ ] Add support for shaders
+- [ ] Support triggers
+- [ ] Singleplayer-only - F1 kills enemy
+- [ ] Support configuration from [IEngine](https://github.com/TheNegumProject/Negum.Core/blob/main/Negum.Core/Engines/IEngine.cs)
+- [ ] Main game loop
+- [ ] Connect to local server for singleplayer
+- [ ] Multiplayer support ([Client](https://github.com/TheNegumProject/Negum.Game/blob/main/Negum.Game/Client/INegumClient.cs), [Server](https://github.com/TheNegumProject/Negum.Game/blob/main/Negum.Game/Server/INegumServer.cs))
+- [X] Client-Server communication via special [Packet](https://github.com/TheNegumProject/Negum.Game/blob/main/Negum.Game/Common/Packets/IPacket.cs)-system
+- [ ] Up to 4 players offline (configurable)
+- [ ] Max number of players online (configurable)
+
+### 1.3. Sending single Packet pipeline
+1. Client gathers data about the packet and serializes them
+2. Client writes packet data to the communication stream
+3. Server reads packet data
+4. Server handles the packet
+5. Server gathers data about the packet and serializes them
+6. Server writes packet data to the communication stream
+7. Client reads packet data
+8. Client handles the packet
+
+</br>
+
+## 2. How To Use
+
+### 2.1. Installation (NuGet)
+TBD
+
+### 2.2. Code / Sample Usage
+TBD
+
+</br>
+
+## 3. Default Usage
+TBD
+
+</br>
+
+## 4. License
+[Click Me](https://github.com/TheNegumProject/Negum.Game/blob/main/LICENSE)
