@@ -15,7 +15,7 @@ namespace Negum.Game.Tests.Runners.Common
         /// </summary>
         public static IConnectionContext LocalHost { get; } = new ConnectionContext
         {
-            Hostname = "192.168.0.11",
+            Hostname = NetworkHelper.GetLocalAddress(),
             Port = 9876
         };
     }
