@@ -9,7 +9,7 @@ The main purpose of this library is to provide User with a set of pre-defined to
 TBD
 
 ### 1.2. Features
-- [ ] General entities definition like Player, Team, Stage, etc.
+- [X] General entities definition like [Player](https://github.com/TheNegumProject/Negum.Game/blob/main/Negum.Game/Common/Entities/IPlayer.cs), [Team](https://github.com/TheNegumProject/Negum.Game/blob/main/Negum.Game/Common/Entities/ITeam.cs), [Match](https://github.com/TheNegumProject/Negum.Game/blob/main/Negum.Game/Common/Entities/IMatch.cs)
 - [ ] Standard fight (match) definition
 - [ ] Hook - Accept User input
 - [ ] Hook - Render image / sprite
