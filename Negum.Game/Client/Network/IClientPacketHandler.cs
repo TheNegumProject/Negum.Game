@@ -1,4 +1,3 @@
-using Negum.Game.Common;
 using Negum.Game.Common.Network;
 
 namespace Negum.Game.Client.Network
@@ -12,21 +11,5 @@ namespace Negum.Game.Client.Network
     /// </author>
     public interface IClientPacketHandler : IPacketHandler
     {
-    }
-    
-    /// <summary>
-    /// </summary>
-    /// 
-    /// <author>
-    /// https://github.com/TheNegumProject/Negum.Game
-    /// </author>
-    public class ClientPacketHandler : IClientPacketHandler
-    {
-        public INegumSide Side { get; }
-
-        public ClientPacketHandler(INegumSide side)
-        {
-            this.Side = side;
-        }
     }
 }
