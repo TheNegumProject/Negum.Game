@@ -11,5 +11,7 @@ namespace Negum.Game.Server
     /// </author>
     public interface INegumServer : INegumSide
     {
+        // TODO: Add ServerState as an object which will be used to sync Players.
+        // TODO: There should also be some Packet for that like: SyncDataPacket which will take ServerState as an argument.
     }
 }

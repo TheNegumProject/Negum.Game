@@ -77,6 +77,8 @@ namespace Negum.Game.Server.Network
                      * 
                      * (It always pause when reading assemblyName in ReadPacketAsync, this is what's crashing
                      * when User disconnects.)
+                     *
+                     * TODO: Remove current Client from ServerState.
                      */
                     
                     break;
