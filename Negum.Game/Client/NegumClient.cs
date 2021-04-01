@@ -62,25 +62,26 @@ namespace Negum.Game.Client
             /*
              * ---=== Client Main Loop ===---
              *
-             * - If game just starts
+             * - Get Key Input (call Hook)
+             * 
+             * - If in Menu (GUI) (When the game starts you are always in menu / intro screen)
+             * --- [GUI] Update Menu (GUI)
+             * --- [GUI] Render Menu (GUI)
+             *
+             * - If tries to connect / load game
              * --- Create appropriate connection and create new Network Manager
              *
              * - If in game:
              * --- Send packet to server to synchronise game / match state (Players, Particles, Stage, positions, etc.)
-             * --- Process Key Input (call Hook)
              * --- Spawn Players (On Round Start) (respawn bots, spawn bots, etc.)
              * --- Adjust Camera (call Hook ???)
              * --- Render Stage (call Hook)
              * --- Render Players (call Hook)
              * --- When game ends AND player don't want rematch, Disconnect Network Manager and NULL it
-             * 
-             * - If in game AND pressed pause button
+             *
+             * - If Pause button was pressed:
              * --- [GUI] Update Pause Menu
              * --- [GUI] Render Pause Menu
-             *
-             * - If not in game:
-             * --- [GUI] Update Menu (GUI) (if any open)
-             * --- [GUI] Render Menu (GUI)
              */
         }
     }
