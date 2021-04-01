@@ -39,14 +39,19 @@ namespace Negum.Game.Client
 
         public async Task StartAsync()
         {
+            // TODO: Allow for configurable framerate (i.e. 60 FPS)
             while (this.CallerThread.IsAlive)
             {
                 await this.TickAsync();
             }
+
+            await this.StopAsync();
         }
 
         public async Task StopAsync()
         {
+            // TODO: Stop any pending operations
+            // TODO: Disconnect from any connected servers
         }
 
         /// <summary>
@@ -55,7 +60,7 @@ namespace Negum.Game.Client
         protected virtual async Task TickAsync()
         {
             /*
-             * ---=== Client Match Main Loop ===---
+             * ---=== Client Main Loop ===---
              *
              * - If game just starts
              * --- Create appropriate connection and create new Network Manager
