@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Negum.Game.Common.Configurations;
 using Negum.Game.Common.Network;
 using Negum.Game.Server.Network;
 
@@ -16,10 +17,10 @@ namespace Negum.Game.Server
         public IPacketHandler PacketHandler { get; }
         public INetworkManager NetworkManager { get; }
 
-        public NegumServerTcp(IConnectionContext connectionContext)
+        public NegumServerTcp(ISideConfiguration configuration)
         {
             this.PacketHandler = new ServerPacketHandler(this);
-            this.NetworkManager = new ServerNetworkManagerTcp(this, connectionContext);
+            this.NetworkManager = new ServerNetworkManagerTcp(this, configuration.ConnectionContext);
         }
         
         public async Task StartAsync()

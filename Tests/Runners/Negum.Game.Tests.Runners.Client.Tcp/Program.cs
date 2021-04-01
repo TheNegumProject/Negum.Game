@@ -1,10 +1,15 @@
 ﻿using System.Threading.Tasks;
 using Negum.Game.Client.Network;
 using Negum.Game.Tests.Mocks;
-using Negum.Game.Tests.Runners.Common;
 
 namespace Negum.Game.Tests.Runners.Client.Tcp
 {
+    /// <summary>
+    /// </summary>
+    /// 
+    /// <author>
+    /// https://github.com/TheNegumProject/Negum.Game
+    /// </author>
     class Program
     {
         static async Task Main(string[] args)

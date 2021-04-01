@@ -1,6 +1,6 @@
 using Negum.Game.Common.Network;
 
-namespace Negum.Game.Tests.Runners.Common
+namespace Negum.Game.Tests.Mocks
 {
     /// <summary>
     /// </summary>
