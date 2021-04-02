@@ -19,6 +19,12 @@ namespace Negum.Game.Common.Configurations
         /// Server - Describes connection on which the server will be listening.
         /// </summary>
         IConnectionContext ConnectionContext { get; }
+        
+        /// <summary>
+        /// Client - Describes the refresh rate (FPS).
+        /// 120 FPS by default.
+        /// </summary>
+        int FrameRate { get; }
     }
     
     /// <summary>
@@ -30,5 +36,6 @@ namespace Negum.Game.Common.Configurations
     public class SideConfiguration : ISideConfiguration
     {
         public IConnectionContext ConnectionContext { get; set; }
+        public int FrameRate { get; set; } = 120; // Default 120 FPS
     }
 }

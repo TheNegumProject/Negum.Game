@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Negum.Game.Client.Network;
@@ -28,6 +29,11 @@ namespace Negum.Game.Client
         /// </summary>
         private IConnectionContext LocalServerContext { get; }
 
+        /// <summary>
+        /// FPS.
+        /// </summary>
+        private int RefreshRate { get; }
+
         // TODO: Add ClientHooks with multiple events like: Draw, PlayAudio, PressKey, etc.
         public NegumClient(Thread callerThread, ISideConfiguration config /*, IClientHooks clientHooks */)
         {
@@ -35,14 +41,23 @@ namespace Negum.Game.Client
 
             this.CallerThread = callerThread;
             this.LocalServerContext = config.ConnectionContext;
+            this.RefreshRate = config.FrameRate;
         }
 
         public async Task StartAsync()
         {
-            // TODO: Allow for configurable framerate (i.e. 60 FPS)
+            var frameRate = 1000 / this.RefreshRate;
+            var lastTime = DateTime.Now;
+            
             while (this.CallerThread.IsAlive)
             {
-                await this.TickAsync();
+                var deltaTime = DateTime.Now - lastTime;
+                lastTime += deltaTime;
+                var deltaTimeElapsed = deltaTime.TotalMilliseconds / 1000;
+                
+                await this.TickAsync(deltaTimeElapsed);
+                
+                await Task.Delay(frameRate);
             }
 
             await this.StopAsync();
@@ -57,7 +72,7 @@ namespace Negum.Game.Client
         /// <summary>
         /// Performs single tick.
         /// </summary>
-        protected virtual async Task TickAsync()
+        protected virtual async Task TickAsync(double deltaTime)
         {
             /*
              * ---=== Client Main Loop ===---
