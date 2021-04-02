@@ -74,6 +74,7 @@ namespace Negum.Game.Client
              * - If in game:
              * --- Send packet to server to synchronise game / match state (Players, Particles, Stage, positions, etc.)
              * --- Spawn Players (On Round Start) (respawn bots, spawn bots, etc.)
+             * --- Update Player data
              * --- Adjust Camera (call Hook ???)
              * --- Render Stage (call Hook)
              * --- Render Players (call Hook)
