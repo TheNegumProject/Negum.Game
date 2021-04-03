@@ -9,7 +9,7 @@ namespace Negum.Game.Client
     /// </author>
     public class ClientHooks
     {
-        public INegumClient Client { get; }
+        protected INegumClient Client { get; }
 
         public ClientHooks(INegumClient client)
         {
