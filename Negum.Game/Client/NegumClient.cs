@@ -1,6 +1,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Negum.Core.Engines;
+using Negum.Game.Client.Input;
 using Negum.Game.Client.Network;
 using Negum.Game.Common.Configurations;
 using Negum.Game.Common.Network;
@@ -8,6 +10,7 @@ using Negum.Game.Common.Network;
 namespace Negum.Game.Client
 {
     /// <summary>
+    /// Main Client class used to initialize the engine and main loop.
     /// </summary>
     /// 
     /// <author>
@@ -17,35 +20,30 @@ namespace Negum.Game.Client
     {
         public IPacketHandler PacketHandler { get; }
         public INetworkManager NetworkManager { get; }
-
-        /// <summary>
-        /// Thread on which the current Client was created.
-        /// </summary>
-        private Thread CallerThread { get; }
-
-        /// <summary>
-        /// Context for local server connection.
-        /// This should be used every time Client plays game that is not multiplayer-specific.
-        /// </summary>
-        private IConnectionContext LocalServerContext { get; }
-
-        /// <summary>
-        /// FPS.
-        /// </summary>
-        private int RefreshRate { get; }
+        public Thread CallerThread { get; }
+        public IConnectionContext LocalServerContext { get; }
+        public int RefreshRate { get; }
+        public IEngine Engine { get; }
+        public InputManager Input { get; }
+        public ClientHooks Hooks { get; }
 
         // TODO: Add ClientHooks with multiple events like: Draw, PlayAudio, PressKey, etc.
-        public NegumClient(Thread callerThread, ISideConfiguration config /*, IClientHooks clientHooks */)
+        public NegumClient(ISideConfiguration config)
         {
             this.PacketHandler = new ClientPacketHandler(this);
+            this.Input = new InputManager(this);
+            this.Hooks = new ClientHooks(this);
 
-            this.CallerThread = callerThread;
+            this.CallerThread = config.CallerThread;
             this.LocalServerContext = config.ConnectionContext;
             this.RefreshRate = config.FrameRate;
+            this.Engine = config.Engine;
         }
 
         public async Task StartAsync()
         {
+            this.Input.ProcessKeys();
+            
             var frameRate = 1000 / this.RefreshRate;
             var lastTime = DateTime.Now;
             
@@ -72,12 +70,12 @@ namespace Negum.Game.Client
         /// <summary>
         /// Performs single tick.
         /// </summary>
-        protected virtual async Task TickAsync(double deltaTime)
+        public virtual async Task TickAsync(double deltaTime)
         {
             /*
-             * ---=== Client Main Loop ===---
+             * TODO: ---=== Client Main Loop ===---
              *
-             * - Get Key Input (call Hook)
+             * - Get Key Input (call Hook) (this hook will be called from outside)
              * 
              * - If in Menu (GUI) (When the game starts you are always in menu / intro screen)
              * --- [GUI] Update Menu (GUI)
@@ -99,6 +97,13 @@ namespace Negum.Game.Client
              * --- [GUI] Update Pause Menu
              * --- [GUI] Render Pause Menu
              */
+            
+            // TODO: ---=== Implementation start here ===---
+
+            // this.GuiManager.Tick(); // TODO: Handle Updating and Rendering GUI
+            // this.InputManager.Tick(); // TODO: Processed ALL possible keypresses
+            // this.MatchManager.Tick(deltaTime); // TODO: Update current Match
+            // this.GuiManager.Render(deltaTime); // TODO: Render GUI, Stage, Players, Particles, etc.
         }
     }
 }
