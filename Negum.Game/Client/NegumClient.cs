@@ -24,7 +24,6 @@ namespace Negum.Game.Client
         public Thread CallerThread { get; }
         public IConnectionContext LocalServerContext { get; }
         public int RefreshRate { get; }
-
         public IEngine Engine { get; }
         public IInputManager Input { get; }
         public IClientHooks Hooks { get; }
@@ -102,7 +101,7 @@ namespace Negum.Game.Client
 
             // TODO: ---=== Implementation start here ===---
 
-            // this.GuiManager.Tick(); // TODO: Handle Updating and Rendering GUI
+            // this.GuiManager.Tick(); // TODO: Handle Updating and Rendering GUI - GuiManager vs ScreenManager ?
             this.Input.Tick(deltaTime);
             // this.MatchManager.Tick(deltaTime); // TODO: Update current Match
             // this.RenderManager.Tick(deltaTime); // TODO: Render GUI, Stage, Players, Particles, etc.
