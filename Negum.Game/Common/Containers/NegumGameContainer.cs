@@ -1,3 +1,5 @@
+using Negum.Core.Containers;
+
 namespace Negum.Game.Common.Containers
 {
     /// <summary>
@@ -15,6 +17,7 @@ namespace Negum.Game.Common.Containers
         /// </summary>
         public static void RegisterKnownTypes()
         {
+            NegumContainer.RegisterInterfaceClassPairs("Negum.Game", typeof(NegumGameContainer));
         }
     }
 }

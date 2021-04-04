@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Negum.Core.Containers;
 using Negum.Core.Engines;
 using Negum.Game.Client.Input;
 using Negum.Game.Client.Network;
@@ -23,16 +24,17 @@ namespace Negum.Game.Client
         public Thread CallerThread { get; }
         public IConnectionContext LocalServerContext { get; }
         public int RefreshRate { get; }
+
         public IEngine Engine { get; }
-        public InputManager Input { get; }
-        public ClientHooks Hooks { get; }
+        public IInputManager Input { get; }
+        public IClientHooks Hooks { get; }
 
         // TODO: Add ClientHooks with multiple events like: Draw, PlayAudio, PressKey, etc.
         public NegumClient(ISideConfiguration config)
         {
-            this.PacketHandler = new ClientPacketHandler(this);
-            this.Input = new InputManager(this);
-            this.Hooks = new ClientHooks(this);
+            this.PacketHandler = this.ResolveModule<IClientPacketHandler>();
+            this.Input = this.ResolveModule<IInputManager>();
+            this.Hooks = this.ResolveModule<IClientHooks>();
 
             this.CallerThread = config.CallerThread;
             this.LocalServerContext = config.ConnectionContext;
@@ -43,18 +45,18 @@ namespace Negum.Game.Client
         public async Task StartAsync()
         {
             this.Input.ProcessKeys();
-            
+
             var frameRate = 1000 / this.RefreshRate;
             var lastTime = DateTime.Now;
-            
+
             while (this.CallerThread.IsAlive)
             {
                 var deltaTime = DateTime.Now - lastTime;
                 lastTime += deltaTime;
                 var deltaTimeElapsed = deltaTime.TotalMilliseconds / 1000;
-                
+
                 await this.TickAsync(deltaTimeElapsed);
-                
+
                 await Task.Delay(frameRate);
             }
 
@@ -97,13 +99,21 @@ namespace Negum.Game.Client
              * --- [GUI] Update Pause Menu
              * --- [GUI] Render Pause Menu
              */
-            
+
             // TODO: ---=== Implementation start here ===---
 
             // this.GuiManager.Tick(); // TODO: Handle Updating and Rendering GUI
-            // this.InputManager.Tick(); // TODO: Processed ALL possible keypresses
+            this.Input.Tick(deltaTime);
             // this.MatchManager.Tick(deltaTime); // TODO: Update current Match
-            // this.GuiManager.Render(deltaTime); // TODO: Render GUI, Stage, Players, Particles, etc.
+            // this.RenderManager.Tick(deltaTime); // TODO: Render GUI, Stage, Players, Particles, etc.
         }
+
+        /// <summary>
+        /// </summary>
+        /// <typeparam name="TClientModule"></typeparam>
+        /// <returns>New module for the current Client.</returns>
+        private TClientModule ResolveModule<TClientModule>()
+            where TClientModule : IClientModule =>
+            (TClientModule) NegumContainer.Resolve<TClientModule>().Use(this);
     }
 }

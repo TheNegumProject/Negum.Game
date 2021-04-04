@@ -7,22 +7,37 @@ namespace Negum.Game.Client.Input
     /// <author>
     /// https://github.com/TheNegumProject/Negum.Game
     /// </author>
-    public class InputManager
+    public interface IInputManager : IClientModule
     {
-        protected INegumClient Client { get; }
-        
-        public PlayerKeyBinding Player1Keys { get; protected set; }
-        public PlayerKeyBinding Player2Keys { get; protected set; }
-
-        public InputManager(INegumClient client)
-        {
-            this.Client = client;
-        }
-
         /// <summary>
         /// Reads all keys from Client's engine object and processes it.
         /// </summary>
-        public virtual void ProcessKeys()
+        void ProcessKeys();
+
+        /// <summary>
+        /// Presses a specified key.
+        /// </summary>
+        /// <param name="keyCode"></param>
+        void OnKeyPressed(int keyCode);
+    }
+
+    /// <summary>
+    /// </summary>
+    /// 
+    /// <author>
+    /// https://github.com/TheNegumProject/Negum.Game
+    /// </author>
+    public class InputManager : ClientModule, IInputManager
+    {
+        public PlayerKeyBinding Player1Keys { get; protected set; }
+        public PlayerKeyBinding Player2Keys { get; protected set; }
+
+        public override void Tick(double deltaTime)
+        {
+            // TODO: Process ALL pressed keys
+        }
+
+        public void ProcessKeys()
         {
             var config = this.Client.Engine.Data.ConfigManager;
 
@@ -34,11 +49,7 @@ namespace Negum.Game.Client.Input
             // TODO: Add support for AnyKeyUnpauses
         }
 
-        /// <summary>
-        /// Presses a specified key.
-        /// </summary>
-        /// <param name="keyCode"></param>
-        public virtual void OnKeyPressed(int keyCode)
+        public void OnKeyPressed(int keyCode)
         {
             this.Player1Keys.OnKeyPressed(keyCode);
             this.Player2Keys.OnKeyPressed(keyCode);

@@ -7,20 +7,24 @@ namespace Negum.Game.Client
     /// <author>
     /// https://github.com/TheNegumProject/Negum.Game
     /// </author>
-    public class ClientHooks
+    public interface IClientHooks : IClientModule
     {
-        protected INegumClient Client { get; }
-
-        public ClientHooks(INegumClient client)
-        {
-            this.Client = client;
-        }
-
         /// <summary>
         /// This hook allow outside code to indicate clicking operation.
         /// </summary>
         /// <param name="keyCode"></param>
-        public virtual void OnKeyPressed(int keyCode) => 
+        void OnKeyPressed(int keyCode);
+    }
+
+    /// <summary>
+    /// </summary>
+    /// 
+    /// <author>
+    /// https://github.com/TheNegumProject/Negum.Game
+    /// </author>
+    public class ClientHooks : ClientModule, IClientHooks
+    {
+        public virtual void OnKeyPressed(int keyCode) =>
             this.Client.Input.OnKeyPressed(keyCode);
     }
 }

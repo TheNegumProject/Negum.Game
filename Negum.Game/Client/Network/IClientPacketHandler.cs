@@ -9,7 +9,7 @@ namespace Negum.Game.Client.Network
     /// <author>
     /// https://github.com/TheNegumProject/Negum.Game
     /// </author>
-    public interface IClientPacketHandler : IPacketHandler
+    public interface IClientPacketHandler : IPacketHandler, IClientModule
     {
     }
 }

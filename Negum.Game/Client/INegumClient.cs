@@ -30,20 +30,20 @@ namespace Negum.Game.Client
         /// FPS.
         /// </summary>
         int RefreshRate { get; }
-        
+
         /// <summary>
         /// Engine used by current Client.
         /// </summary>
         IEngine Engine { get; }
-        
+
         /// <summary>
         /// Manager used to handle input.
         /// </summary>
-        InputManager Input { get; }
-        
+        IInputManager Input { get; }
+
         /// <summary>
         /// Hooks which should be used for interoperability with the library.
         /// </summary>
-        ClientHooks Hooks { get; }
+        IClientHooks Hooks { get; }
     }
 }

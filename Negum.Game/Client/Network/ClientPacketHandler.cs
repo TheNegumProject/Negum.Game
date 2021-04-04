@@ -8,13 +8,8 @@ namespace Negum.Game.Client.Network
     /// <author>
     /// https://github.com/TheNegumProject/Negum.Game
     /// </author>
-    public class ClientPacketHandler : IClientPacketHandler
+    public class ClientPacketHandler : ClientModule, IClientPacketHandler
     {
-        public INegumSide Side { get; }
-
-        public ClientPacketHandler(INegumSide side)
-        {
-            this.Side = side;
-        }
+        public INegumSide Side => this.Client;
     }
 }
