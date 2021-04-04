@@ -1,6 +1,8 @@
 using System.Threading;
 using Negum.Core.Engines;
 using Negum.Game.Client.Input;
+using Negum.Game.Client.Match;
+using Negum.Game.Client.Screen;
 using Negum.Game.Common;
 using Negum.Game.Common.Network;
 
@@ -45,5 +47,21 @@ namespace Negum.Game.Client
         /// Hooks which should be used for interoperability with the library.
         /// </summary>
         IClientHooks Hooks { get; }
+
+        /// <summary>
+        /// Manager used to handle screen-related logic.
+        /// I.e. updating Camera position, zoom, particles position, etc.
+        /// </summary>
+        IScreenManager Screen { get; }
+
+        /// <summary>
+        /// Manager used to handle match-related logic.
+        /// </summary>
+        IMatchManager Match { get; }
+
+        /// <summary>
+        /// Manager used to handle rendering.
+        /// </summary>
+        IRenderManager Renderer { get; }
     }
 }

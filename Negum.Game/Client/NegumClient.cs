@@ -4,7 +4,9 @@ using System.Threading.Tasks;
 using Negum.Core.Containers;
 using Negum.Core.Engines;
 using Negum.Game.Client.Input;
+using Negum.Game.Client.Match;
 using Negum.Game.Client.Network;
+using Negum.Game.Client.Screen;
 using Negum.Game.Common.Configurations;
 using Negum.Game.Common.Network;
 
@@ -27,6 +29,9 @@ namespace Negum.Game.Client
         public IEngine Engine { get; }
         public IInputManager Input { get; }
         public IClientHooks Hooks { get; }
+        public IScreenManager Screen { get; }
+        public IMatchManager Match { get; }
+        public IRenderManager Renderer { get; }
 
         // TODO: Add ClientHooks with multiple events like: Draw, PlayAudio, PressKey, etc.
         public NegumClient(ISideConfiguration config)
@@ -34,6 +39,9 @@ namespace Negum.Game.Client
             this.PacketHandler = this.ResolveModule<IClientPacketHandler>();
             this.Input = this.ResolveModule<IInputManager>();
             this.Hooks = this.ResolveModule<IClientHooks>();
+            this.Screen = this.ResolveModule<IScreenManager>();
+            this.Match = this.ResolveModule<IMatchManager>();
+            this.Renderer = this.ResolveModule<IRenderManager>();
 
             this.CallerThread = config.CallerThread;
             this.LocalServerContext = config.ConnectionContext;
@@ -101,10 +109,10 @@ namespace Negum.Game.Client
 
             // TODO: ---=== Implementation start here ===---
 
-            // this.GuiManager.Tick(); // TODO: Handle Updating and Rendering GUI - GuiManager vs ScreenManager ?
+            this.Screen.Tick(deltaTime);
             this.Input.Tick(deltaTime);
-            // this.MatchManager.Tick(deltaTime); // TODO: Update current Match
-            // this.RenderManager.Tick(deltaTime); // TODO: Render GUI, Stage, Players, Particles, etc.
+            this.Match.Tick(deltaTime);
+            this.Renderer.Tick(deltaTime);
         }
 
         /// <summary>
