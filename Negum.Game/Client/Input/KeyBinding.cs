@@ -18,18 +18,19 @@ namespace Negum.Game.Client.Input
         protected int InitialKeyCode { get; }
 
         /// <summary>
-        /// KeyCode currently being used.
+        /// String-representation of the current key.
         /// </summary>
-        protected int CurrentKeyCode { get; set; }
+        protected string Key { get; }
 
         /// <summary>
-        /// Indicates a total number of registered clicks which needs to be handled in main loop.
+        /// KeyCode currently being used.
         /// </summary>
-        protected int Clicks { get; set; }
+        public int CurrentKeyCode { get; protected set; }
 
-        public KeyBinding(int keyCode)
+        public KeyBinding(int keyCode, string key)
         {
             this.InitialKeyCode = keyCode;
+            this.Key = key;
 
             this.SetKey(keyCode);
         }
@@ -44,29 +45,8 @@ namespace Negum.Game.Client.Input
         }
 
         /// <summary>
-        /// Tries to click the button.
         /// </summary>
-        /// <param name="keyCode"></param>
-        public virtual void OnKeyPressed(int keyCode)
-        {
-            if (this.CurrentKeyCode == keyCode)
-            {
-                this.Clicks++;
-            }
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <returns>True if the key should be handled; otherwise false.</returns>
-        public virtual bool HandlePressed()
-        {
-            if (this.Clicks == 0)
-            {
-                return false;
-            }
-
-            this.Clicks--;
-            return true;
-        }
+        /// <returns>Key string representation.</returns>
+        public override string ToString() => this.Key;
     }
 }

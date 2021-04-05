@@ -1,4 +1,5 @@
 using Negum.Core.Managers.Entries;
+using Negum.Game.Client.Match;
 
 namespace Negum.Game.Client.Input
 {
@@ -15,8 +16,8 @@ namespace Negum.Game.Client.Input
     {
         public KeyBinding Jump { get; }
         public KeyBinding Crouch { get; }
-        public KeyBinding Left { get; }
-        public KeyBinding Right { get; }
+        public KeyBinding Left { get; protected set; } // TODO: Update based on player1 position in relative to player2 position
+        public KeyBinding Right { get; protected set; } // TODO: Update based on player1 position in relative to player2 position
         public KeyBinding A { get; }
         public KeyBinding B { get; }
         public KeyBinding C { get; }
@@ -24,39 +25,22 @@ namespace Negum.Game.Client.Input
         public KeyBinding Y { get; }
         public KeyBinding Z { get; }
         public KeyBinding Start { get; }
-        
+
+        // TODO: Add instant kill button (F1) - disable it in multiplayer
+
         public PlayerKeyBinding(IKeysEntry keys)
         {
-            this.Jump = new KeyBinding(keys.Jump);
-            this.Crouch = new KeyBinding(keys.Crouch);
-            this.Left = new KeyBinding(keys.Left);
-            this.Right = new KeyBinding(keys.Right);
-            this.A = new KeyBinding(keys.A);
-            this.B = new KeyBinding(keys.B);
-            this.C = new KeyBinding(keys.C);
-            this.X = new KeyBinding(keys.X);
-            this.Y = new KeyBinding(keys.Y);
-            this.Z = new KeyBinding(keys.Z);
-            this.Start = new KeyBinding(keys.Start);
-        }
-
-        /// <summary>
-        /// Presses a specified key.
-        /// </summary>
-        /// <param name="keyCode"></param>
-        public virtual void OnKeyPressed(int keyCode)
-        {
-            this.Jump.OnKeyPressed(keyCode);
-            this.Crouch.OnKeyPressed(keyCode);
-            this.Left.OnKeyPressed(keyCode);
-            this.Right.OnKeyPressed(keyCode);
-            this.A.OnKeyPressed(keyCode);
-            this.B.OnKeyPressed(keyCode);
-            this.C.OnKeyPressed(keyCode);
-            this.X.OnKeyPressed(keyCode);
-            this.Y.OnKeyPressed(keyCode);
-            this.Z.OnKeyPressed(keyCode);
-            this.Start.OnKeyPressed(keyCode);
+            this.Jump = new KeyBinding(keys.Jump, Direction.Up.ToString());
+            this.Crouch = new KeyBinding(keys.Crouch, Direction.Down.ToString());
+            this.Left = new KeyBinding(keys.Left, Direction.Backward.ToString());
+            this.Right = new KeyBinding(keys.Right, Direction.Forward.ToString());
+            this.A = new KeyBinding(keys.A, "a");
+            this.B = new KeyBinding(keys.B, "b");
+            this.C = new KeyBinding(keys.C, "c");
+            this.X = new KeyBinding(keys.X, "x");
+            this.Y = new KeyBinding(keys.Y, "y");
+            this.Z = new KeyBinding(keys.Z, "z");
+            this.Start = new KeyBinding(keys.Start, "START");
         }
     }
 }

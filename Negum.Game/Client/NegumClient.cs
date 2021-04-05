@@ -51,7 +51,7 @@ namespace Negum.Game.Client
 
         public async Task StartAsync()
         {
-            this.Input.ProcessKeys();
+            this.Input.Initialize();
 
             var frameRate = 1000 / this.RefreshRate;
             var lastTime = DateTime.Now;
@@ -109,8 +109,8 @@ namespace Negum.Game.Client
 
             // TODO: ---=== Implementation start here ===---
 
-            this.Screen.Tick(deltaTime);
             this.Input.Tick(deltaTime);
+            this.Screen.Tick(deltaTime);
             this.Match.Tick(deltaTime);
             this.Renderer.Tick(deltaTime);
         }

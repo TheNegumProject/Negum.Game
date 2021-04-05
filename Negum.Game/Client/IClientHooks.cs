@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Negum.Game.Client
 {
     /// <summary>
@@ -11,9 +13,10 @@ namespace Negum.Game.Client
     {
         /// <summary>
         /// This hook allow outside code to indicate clicking operation.
+        /// Multiple keys can be clicked "in the same time".
         /// </summary>
-        /// <param name="keyCode"></param>
-        void OnKeyPressed(int keyCode);
+        /// <param name="keyCodes">Clicked keys.</param>
+        void OnKeyPressed(IEnumerable<int> keyCodes);
     }
 
     /// <summary>
@@ -24,7 +27,7 @@ namespace Negum.Game.Client
     /// </author>
     public class ClientHooks : ClientModule, IClientHooks
     {
-        public virtual void OnKeyPressed(int keyCode) =>
-            this.Client.Input.OnKeyPressed(keyCode);
+        public virtual void OnKeyPressed(IEnumerable<int> keyCodes) =>
+            this.Client.Input.OnKeyPressed(keyCodes);
     }
 }
