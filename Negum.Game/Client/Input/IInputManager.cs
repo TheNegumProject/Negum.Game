@@ -63,7 +63,7 @@ namespace Negum.Game.Client.Input
             Task.WaitAll(tasks);
         }
 
-        public void OnKeyPressed(IEnumerable<int> keyCodes)
+        public virtual void OnKeyPressed(IEnumerable<int> keyCodes)
         {
             this.Player1Keys.OnKeyPressed(keyCodes);
             this.Player2Keys.OnKeyPressed(keyCodes);

@@ -20,17 +20,17 @@ namespace Negum.Game.Client.Input
         /// <summary>
         /// String-representation of the current key.
         /// </summary>
-        protected string Key { get; }
+        protected string Symbol { get; }
 
         /// <summary>
         /// KeyCode currently being used.
         /// </summary>
         public int CurrentKeyCode { get; protected set; }
 
-        public KeyBinding(int keyCode, string key)
+        public KeyBinding(int keyCode, string symbol)
         {
             this.InitialKeyCode = keyCode;
-            this.Key = key;
+            this.Symbol = symbol;
 
             this.SetKey(keyCode);
         }
@@ -47,6 +47,6 @@ namespace Negum.Game.Client.Input
         /// <summary>
         /// </summary>
         /// <returns>Key string representation.</returns>
-        public override string ToString() => this.Key;
+        public override string ToString() => this.Symbol;
     }
 }

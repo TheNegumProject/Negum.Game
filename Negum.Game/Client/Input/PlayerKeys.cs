@@ -23,7 +23,7 @@ namespace Negum.Game.Client.Input
             this.Keys = new PlayerKeyBinding(keys);
         }
 
-        public void OnKeyPressed(IEnumerable<int> keyCodes)
+        public virtual void OnKeyPressed(IEnumerable<int> keyCodes)
         {
             // TODO: Add support / idea for how to handling when key is pressed when release (tilda-symbol in command)
             // TODO: Cache pressed keys
