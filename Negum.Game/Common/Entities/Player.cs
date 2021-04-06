@@ -36,8 +36,9 @@ namespace Negum.Game.Common.Entities
         /// </summary>
         public float Power { get; set; }
         
-        // TODO: Add FacingDirection
+        // TODO: Add Facing Direction
         // TODO: Add CurrentState
         // TODO: Add Position
+        // TODO: Add Collision Box
     }
 }
