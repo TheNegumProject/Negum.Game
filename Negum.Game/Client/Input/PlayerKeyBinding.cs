@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Negum.Core.Managers.Entries;
 using Negum.Game.Client.Match;
 
@@ -27,6 +28,17 @@ namespace Negum.Game.Client.Input
         public KeyBinding Start { get; }
 
         // TODO: Add instant kill button (F1) - disable it in multiplayer
+
+        /// <summary>
+        /// Collection of all known keys.
+        /// </summary>
+        public IEnumerable<KeyBinding> AllKeys => new[]
+        {
+            Jump, Crouch, Left, Right,
+            A, B, C,
+            X, Y, Z,
+            Start
+        };
 
         public PlayerKeyBinding(IKeysEntry keys)
         {

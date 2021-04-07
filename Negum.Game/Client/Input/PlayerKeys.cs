@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Negum.Core.Managers.Entries;
 using Negum.Game.Common.Entities;
 
@@ -14,6 +15,11 @@ namespace Negum.Game.Client.Input
     public class PlayerKeys
     {
         /// <summary>
+        /// Represents a cache which stores all information about previously pressed keys.
+        /// </summary>
+        private PlayerKeysCache Cache { get; }
+        
+        /// <summary>
         /// Represents key mapping and available keys.
         /// </summary>
         public PlayerKeyBinding Keys { get; }
@@ -21,12 +27,20 @@ namespace Negum.Game.Client.Input
         public PlayerKeys(IKeysEntry keys)
         {
             this.Keys = new PlayerKeyBinding(keys);
+            this.Cache = new PlayerKeysCache();
         }
 
         public virtual void OnKeyPressed(IEnumerable<int> keyCodes)
         {
-            // TODO: Add support / idea for how to handling when key is pressed when release (tilda-symbol in command)
-            // TODO: Cache pressed keys
+            // TODO: Add support / idea for how to handle when key is pressed, when released (tilda-symbol in command)
+
+            // Pressed keys which are recognized for the current Player
+            var knownPressedKeys = keyCodes
+                .Select(code => this.Keys.AllKeys.FirstOrDefault(key => key.CurrentKeyCode == code))
+                .Where(key => key != null)
+                .ToList();
+
+            this.Cache.RegisterPressed(knownPressedKeys);
         }
 
         public virtual void Tick(IInputManager manager, Player player)
@@ -36,6 +50,8 @@ namespace Negum.Game.Client.Input
             
             // TODO: Read combinations from some cached previous presses and check if any combo can be executed
             // TODO: If in GUI / Screen update cursor / marker / highlight
+
+            this.Cache.Tick();
         }
     }
 }
