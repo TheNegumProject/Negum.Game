@@ -15,17 +15,23 @@ namespace Negum.Game.Client.Input
     public class PlayerKeys
     {
         /// <summary>
+        /// Input Manager connected with the current object.
+        /// </summary>
+        private IInputManager InputManager { get; }
+
+        /// <summary>
         /// Represents a cache which stores all information about previously pressed keys.
         /// </summary>
         private PlayerKeysCache Cache { get; }
-        
+
         /// <summary>
         /// Represents key mapping and available keys.
         /// </summary>
         public PlayerKeyBinding Keys { get; }
 
-        public PlayerKeys(IKeysEntry keys)
+        public PlayerKeys(IInputManager inputManager, IKeysEntry keys)
         {
+            this.InputManager = inputManager;
             this.Keys = new PlayerKeyBinding(keys);
             this.Cache = new PlayerKeysCache();
         }
@@ -43,15 +49,37 @@ namespace Negum.Game.Client.Input
             this.Cache.RegisterPressed(knownPressedKeys);
         }
 
-        public virtual void Tick(IInputManager manager, Player player)
+        public virtual void Tick(Player player)
         {
-            // TODO: If "manager" != null then update GUI / Screen
-            // TODO: Else if "player" != null then update player / match, execute combo, etc.
-            
-            // TODO: Read combinations from some cached previous presses and check if any combo can be executed
-            // TODO: If in GUI / Screen update cursor / marker / highlight
+            if (this.InputManager.Client.Screen.IsGuiOpened)
+            {
+                this.HandleForGui();
+            }
+            else if (player != null)
+            {
+                this.HandleForMatch(player);
+            }
+        }
+
+        /// <summary>
+        /// Updates GUI state, markers, highlighted options, etc. OR closes the GUI.
+        /// </summary>
+        protected virtual void HandleForGui()
+        {
+            // TODO: Update GUI state, markers, highlighted options, etc. OR close GUI
+        }
+
+        /// <summary>
+        /// Processes keys for the current Match.
+        /// </summary>
+        /// <param name="player"></param>
+        protected virtual void HandleForMatch(Player player)
+        {
+            // TODO: Update Player based on pressed keys
 
             this.Cache.Tick();
+
+            // TODO: Perform combo and clear Cached keys
         }
     }
 }

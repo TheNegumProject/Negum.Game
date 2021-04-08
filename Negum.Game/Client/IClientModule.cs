@@ -10,6 +10,11 @@ namespace Negum.Game.Client
     public interface IClientModule
     {
         /// <summary>
+        /// Client with which the current module is connected.
+        /// </summary>
+        INegumClient Client { get; }
+
+        /// <summary>
         /// Initializes the module with given client object.
         /// </summary>
         /// <param name="client"></param>
@@ -34,7 +39,7 @@ namespace Negum.Game.Client
         /// <summary>
         /// Client to which the current module is connected.
         /// </summary>
-        protected INegumClient Client { get; private set; }
+        public INegumClient Client { get; private set; }
 
         public IClientModule Use(INegumClient client)
         {
