@@ -1,3 +1,5 @@
+using System;
+
 namespace Negum.Game.Client.Input
 {
     /// <summary>
@@ -9,6 +11,11 @@ namespace Negum.Game.Client.Input
     /// </author>
     public class KeyBinding
     {
+        /// <summary>
+        /// Callback which is used when reacting to pressing the button.
+        /// </summary>
+        protected Action OnClickCallback { get; set; }
+
         /// <summary>
         /// KeyCode read from configuration.
         /// 
@@ -48,5 +55,14 @@ namespace Negum.Game.Client.Input
         /// </summary>
         /// <returns>Key string representation.</returns>
         public override string ToString() => this.Symbol;
+
+        /// <summary>
+        /// Sets clicking callback for the current key.
+        /// </summary>
+        /// <param name="callback"></param>
+        public virtual void SetOnClick(Action callback)
+        {
+            this.OnClickCallback = callback;
+        }
     }
 }

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Negum.Game.Client.Input
 {
@@ -45,18 +44,6 @@ namespace Negum.Game.Client.Input
             // TODO: Add support for Joystick variables from Engine - config.P1Joystick.Keys, etc. - Do we need it ???
             // TODO: Add support for InputDirMode
             // TODO: Add support for AnyKeyUnpauses
-        }
-
-        public override void Tick(double deltaTime)
-        {
-            // We want Players to behave in async order
-            var tasks = new[]
-            {
-                Task.Run(() => this.Player1Keys.Tick(this.Client.Match.GetPlayer(0))),
-                Task.Run(() => this.Player2Keys.Tick(this.Client.Match.GetPlayer(1)))
-            };
-
-            Task.WaitAll(tasks);
         }
 
         public virtual void OnKeyPressed(IEnumerable<int> keyCodes)
