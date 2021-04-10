@@ -55,5 +55,10 @@ namespace Negum.Game.Client.Input
             this.PressedKeys.Enqueue(knownPressedKeys);
             this.UnprocessedKeys.Enqueue(knownPressedKeys);
         }
+
+        public virtual void Tick(double deltaTime)
+        {
+            // TODO: Clear PressedKeys and UnpressedKeys after the the time for combo has ended
+        }
     }
 }

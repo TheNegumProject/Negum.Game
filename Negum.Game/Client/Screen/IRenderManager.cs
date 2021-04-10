@@ -22,6 +22,8 @@ namespace Negum.Game.Client.Screen
         public override void Tick(double deltaTime)
         {
             // TODO: Render GUI, Stage, Players, Particles, etc.
+
+            this.Client.Screen.CurrentScreen.Render(this);
         }
     }
 }

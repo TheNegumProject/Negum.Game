@@ -10,12 +10,16 @@ namespace Negum.Game.Client.Screen
     public interface IScreenManager : IClientModule
     {
         /// <summary>
-        /// Flag which indicates if Player is in GUI / Menu or if the match is in progress.
-        /// 
-        /// True - Any GUI is opened. It can either be a Menu screen or Pause screen (or some other GUI).
-        /// False - Match is in progress.
+        /// Screen which is currently being used / rendered.
+        /// I.e. Menu, Character Selection, Options, Match, etc.
         /// </summary>
-        bool IsGuiOpened { get; }
+        IScreen CurrentScreen { get; }
+
+        /// <summary>
+        /// Sets new screen to be displayed.
+        /// </summary>
+        /// <param name="screen">New screen</param>
+        void SetScreen(IScreen screen);
     }
 
     /// <summary>
@@ -26,11 +30,16 @@ namespace Negum.Game.Client.Screen
     /// </author>
     public class ScreenManger : ClientModule, IScreenManager
     {
-        public bool IsGuiOpened { get; protected set; } = true; // TODO: Modify this value accordingly
+        public IScreen CurrentScreen { get; protected set; }
 
-        public override void Tick(double deltaTime)
+        public void SetScreen(IScreen screen)
         {
-            // TODO: Handle Updating GUI and Match (i.e. character, stage, particles, etc.) - Just logic, not rendering
+            this.CurrentScreen = screen;
+
+            // TODO: Add support for more Players
+
+            this.CurrentScreen.Setup(this.Client, this.Client.Input.Player1Keys.Keys);
+            this.CurrentScreen.Setup(this.Client, this.Client.Input.Player2Keys.Keys);
         }
     }
 }

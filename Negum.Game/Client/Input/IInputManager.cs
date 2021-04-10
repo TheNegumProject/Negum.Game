@@ -12,6 +12,16 @@ namespace Negum.Game.Client.Input
     public interface IInputManager : IClientModule
     {
         /// <summary>
+        /// Represents keys of Player1.
+        /// </summary>
+        PlayerKeys Player1Keys { get; }
+
+        /// <summary>
+        /// Represents keys of Player2.
+        /// </summary>
+        PlayerKeys Player2Keys { get; }
+
+        /// <summary>
         /// Reads all keys from Client's engine object and processes it.
         /// </summary>
         void Initialize();
@@ -38,6 +48,8 @@ namespace Negum.Game.Client.Input
         {
             var config = this.Client.Engine.Data.ConfigManager;
 
+            // TODO: Add support for multiple Players - will need to modify Negum.Core
+
             this.Player1Keys = new PlayerKeys(this, config.P1Keys.Keys);
             this.Player2Keys = new PlayerKeys(this, config.P2Keys.Keys);
 
@@ -50,6 +62,12 @@ namespace Negum.Game.Client.Input
         {
             this.Player1Keys.OnKeyPressed(keyCodes);
             this.Player2Keys.OnKeyPressed(keyCodes);
+        }
+
+        public override void Tick(double deltaTime)
+        {
+            this.Player1Keys.Tick(deltaTime);
+            this.Player2Keys.Tick(deltaTime);
         }
     }
 }
