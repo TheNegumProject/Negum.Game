@@ -11,8 +11,17 @@ namespace Negum.Game.Client.Screen
     /// </author>
     public abstract class AbstractScreen : IScreen
     {
-        public abstract void Setup(INegumClient client, PlayerKeyBinding binding);
+        public INegumClient Client { get; }
 
-        public abstract void Render(IRenderManager manager);
+        public AbstractScreen(INegumClient client)
+        {
+            this.Client = client;
+        }
+
+        public abstract void Setup(PlayerKeyBinding binding);
+
+        public abstract void Tick(double deltaTime);
+
+        public abstract void Render();
     }
 }

@@ -23,7 +23,7 @@ namespace Negum.Game.Client.Screen
         {
             // TODO: Render GUI, Stage, Players, Particles, etc.
 
-            this.Client.Screen.CurrentScreen.Render(this);
+            this.Client.Screen.CurrentScreen.Render();
         }
     }
 }

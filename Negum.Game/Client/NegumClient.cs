@@ -110,8 +110,8 @@ namespace Negum.Game.Client
             // TODO: ---=== Implementation start here ===---
 
             this.Input.Tick(deltaTime);
-            this.Screen.Tick(deltaTime);
             this.Match.Tick(deltaTime);
+            this.Screen.Tick(deltaTime);
             this.Renderer.Tick(deltaTime);
         }
 
