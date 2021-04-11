@@ -30,19 +30,10 @@ namespace Negum.Game.Client.Screen
 
             playersBindings.ForEach(binding =>
             {
-                binding.A.SetOnClick(this.DoSkip);
-                binding.B.SetOnClick(this.DoSkip);
-                binding.C.SetOnClick(this.DoSkip);
-
-                binding.Crouch.SetOnClick(this.DoSkip);
-                binding.Jump.SetOnClick(this.DoSkip);
-                binding.Left.SetOnClick(this.DoSkip);
-                binding.Right.SetOnClick(this.DoSkip);
-                binding.Start.SetOnClick(this.DoSkip);
-
-                binding.X.SetOnClick(this.DoSkip);
-                binding.Y.SetOnClick(this.DoSkip);
-                binding.Z.SetOnClick(this.DoSkip);
+                foreach (var key in binding.AllKeys)
+                {
+                    key.SetOnClick(this.DoSkip);
+                }
             });
         }
 
