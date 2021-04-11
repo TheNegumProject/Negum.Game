@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Negum.Game.Client.Input;
 
 namespace Negum.Game.Client.Screen
@@ -19,21 +20,30 @@ namespace Negum.Game.Client.Screen
         {
         }
 
-        public override void Setup(PlayerKeyBinding binding)
+        public override void Setup()
         {
-            binding.A.SetOnClick(this.DoSkip);
-            binding.B.SetOnClick(this.DoSkip);
-            binding.C.SetOnClick(this.DoSkip);
+            var playersBindings = new List<PlayerKeyBinding>
+            {
+                this.Client.Input.Player1Keys.Keys,
+                this.Client.Input.Player2Keys.Keys
+            };
 
-            binding.Crouch.SetOnClick(this.DoSkip);
-            binding.Jump.SetOnClick(this.DoSkip);
-            binding.Left.SetOnClick(this.DoSkip);
-            binding.Right.SetOnClick(this.DoSkip);
-            binding.Start.SetOnClick(this.DoSkip);
+            playersBindings.ForEach(binding =>
+            {
+                binding.A.SetOnClick(this.DoSkip);
+                binding.B.SetOnClick(this.DoSkip);
+                binding.C.SetOnClick(this.DoSkip);
 
-            binding.X.SetOnClick(this.DoSkip);
-            binding.Y.SetOnClick(this.DoSkip);
-            binding.Z.SetOnClick(this.DoSkip);
+                binding.Crouch.SetOnClick(this.DoSkip);
+                binding.Jump.SetOnClick(this.DoSkip);
+                binding.Left.SetOnClick(this.DoSkip);
+                binding.Right.SetOnClick(this.DoSkip);
+                binding.Start.SetOnClick(this.DoSkip);
+
+                binding.X.SetOnClick(this.DoSkip);
+                binding.Y.SetOnClick(this.DoSkip);
+                binding.Z.SetOnClick(this.DoSkip);
+            });
         }
 
         public override void Tick(double deltaTime)

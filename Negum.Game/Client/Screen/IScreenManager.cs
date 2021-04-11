@@ -54,11 +54,7 @@ namespace Negum.Game.Client.Screen
         public void NextScreen(IScreen screen)
         {
             this.ScreenStack.Push(screen);
-
-            // TODO: Add support for more Players
-
-            this.CurrentScreen.Setup(this.Client.Input.Player1Keys.Keys);
-            this.CurrentScreen.Setup(this.Client.Input.Player2Keys.Keys);
+            this.CurrentScreen.Setup();
         }
 
         public void GoToPreviousScreen()

@@ -1,5 +1,3 @@
-using Negum.Game.Client.Input;
-
 namespace Negum.Game.Client.Screen
 {
     /// <summary>
@@ -18,7 +16,7 @@ namespace Negum.Game.Client.Screen
             this.Client = client;
         }
 
-        public abstract void Setup(PlayerKeyBinding binding);
+        public abstract void Setup();
 
         public abstract void Tick(double deltaTime);
 

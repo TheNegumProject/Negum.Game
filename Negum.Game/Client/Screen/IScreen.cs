@@ -1,5 +1,3 @@
-using Negum.Game.Client.Input;
-
 namespace Negum.Game.Client.Screen
 {
     /// <summary>
@@ -16,10 +14,9 @@ namespace Negum.Game.Client.Screen
         INegumClient Client { get; }
 
         /// <summary>
-        /// Setups given binding how each button should behave when the current screen is displayed.
+        /// Setups bindings of how each button should behave when the current screen is displayed.
         /// </summary>
-        /// <param name="binding"></param>
-        void Setup(PlayerKeyBinding binding);
+        void Setup();
 
         /// <summary>
         /// Ticks current screen's logic.

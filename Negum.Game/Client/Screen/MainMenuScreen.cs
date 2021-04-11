@@ -1,5 +1,3 @@
-using Negum.Game.Client.Input;
-
 namespace Negum.Game.Client.Screen
 {
     /// <summary>
@@ -16,7 +14,7 @@ namespace Negum.Game.Client.Screen
         {
         }
 
-        public override void Setup(PlayerKeyBinding binding)
+        public override void Setup()
         {
         }
 
