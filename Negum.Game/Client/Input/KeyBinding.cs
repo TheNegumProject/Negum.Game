@@ -64,5 +64,13 @@ namespace Negum.Game.Client.Input
         {
             this.OnClickCallback = callback;
         }
+
+        /// <summary>
+        /// Clears logic assigned to this key.
+        /// </summary>
+        public virtual void ClearLogic()
+        {
+            this.OnClickCallback = () => { };
+        }
     }
 }

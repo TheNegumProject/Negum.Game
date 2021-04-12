@@ -54,12 +54,29 @@ namespace Negum.Game.Client.Screen
         public void NextScreen(IScreen screen)
         {
             this.ScreenStack.Push(screen);
+            this.ClearKeysLogic();
             this.CurrentScreen.Setup();
         }
 
         public void GoToPreviousScreen()
         {
             this.ScreenStack.Pop();
+            this.ClearKeysLogic();
+            this.CurrentScreen.Setup();
+        }
+
+        protected virtual void ClearKeysLogic()
+        {
+            var playersBindings = new[]
+            {
+                this.Client.Input.Player1Keys.Keys,
+                this.Client.Input.Player2Keys.Keys
+            };
+
+            foreach (var binding in playersBindings)
+            {
+                binding.ClearKeysLogic();
+            }
         }
     }
 }

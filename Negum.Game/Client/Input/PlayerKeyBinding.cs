@@ -54,5 +54,16 @@ namespace Negum.Game.Client.Input
             this.Z = new KeyBinding(keys.Z, "z");
             this.Start = new KeyBinding(keys.Start, "START");
         }
+
+        /// <summary>
+        /// Clears logic assigned to the keys.
+        /// </summary>
+        public virtual void ClearKeysLogic()
+        {
+            foreach (var key in AllKeys)
+            {
+                key.ClearLogic();
+            }
+        }
     }
 }
