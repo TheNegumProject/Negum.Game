@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Negum.Core" Version="0.2021.415.801" />
+      <PackageReference Include="Negum.Core" Version="0.2021.416.608" />
     </ItemGroup>
 
 </Project>
