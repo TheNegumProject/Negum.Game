@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Negum.Core.Models.Data;
 using Negum.Game.Client.Input;
 
 namespace Negum.Game.Client.Screen
@@ -14,6 +15,8 @@ namespace Negum.Game.Client.Screen
     public class IntroScreen : AbstractScreen
     {
         protected bool SkipIntro { get; set; }
+        protected IStoryboard Logo { get; set; }
+        protected IStoryboard Intro { get; set; }
 
         public IntroScreen(INegumClient client) :
             base(client)
@@ -35,6 +38,9 @@ namespace Negum.Game.Client.Screen
                     key.SetOnClick(this.DoSkip);
                 }
             });
+
+            this.Logo = this.Client.Engine.Data.Logo;
+            this.Intro = this.Client.Engine.Data.Intro;
         }
 
         public override void Tick(double deltaTime)
