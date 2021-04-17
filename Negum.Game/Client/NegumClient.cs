@@ -51,7 +51,7 @@ namespace Negum.Game.Client
 
         public async Task StartAsync()
         {
-            this.Input.Initialize();
+            this.InitializeModules();
 
             var frameRate = 1000 / this.RefreshRate;
             var lastTime = DateTime.Now;
@@ -113,6 +113,21 @@ namespace Negum.Game.Client
             this.Match.Tick(deltaTime);
             this.Screen.Tick(deltaTime);
             this.Renderer.Tick(deltaTime);
+        }
+
+        /// <summary>
+        /// Initializes all the modules.
+        ///
+        /// NOTE:
+        /// We need to do it AFTER the NegumClient object has been initialized.
+        /// </summary>
+        protected virtual void InitializeModules()
+        {
+            this.Input.Initialize();
+            this.Hooks.Initialize();
+            this.Screen.Initialize();
+            this.Match.Initialize();
+            this.Renderer.Initialize();
         }
 
         /// <summary>

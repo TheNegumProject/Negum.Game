@@ -22,11 +22,6 @@ namespace Negum.Game.Client.Input
         PlayerKeys Player2Keys { get; }
 
         /// <summary>
-        /// Reads all keys from Client's engine object and processes it.
-        /// </summary>
-        void Initialize();
-
-        /// <summary>
         /// Presses a specified key.
         /// </summary>
         /// <param name="keyCodes"></param>
@@ -44,7 +39,7 @@ namespace Negum.Game.Client.Input
         public PlayerKeys Player1Keys { get; protected set; }
         public PlayerKeys Player2Keys { get; protected set; }
 
-        public void Initialize()
+        public override void Initialize()
         {
             var config = this.Client.Engine.Data.ConfigManager;
 

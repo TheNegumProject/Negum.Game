@@ -36,7 +36,7 @@ namespace Negum.Game.Client.Screen
     /// <author>
     /// https://github.com/TheNegumProject/Negum.Game
     /// </author>
-    public class ScreenManger : ClientModule, IScreenManager
+    public class ScreenManager : ClientModule, IScreenManager
     {
         /// <summary>
         /// Stacks Screens which Player entered.
@@ -45,7 +45,7 @@ namespace Negum.Game.Client.Screen
 
         public IScreen CurrentScreen => this.ScreenStack.Peek();
 
-        public ScreenManger()
+        public override void Initialize()
         {
             // At first we want to display Intro Screen
             this.NextScreen(new IntroScreen(this.Client));
@@ -67,6 +67,11 @@ namespace Negum.Game.Client.Screen
 
         protected virtual void ClearKeysLogic()
         {
+            if (this.Client == null)
+            {
+                return;
+            }
+
             var playersBindings = new[]
             {
                 this.Client.Input.Player1Keys.Keys,
