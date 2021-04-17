@@ -44,7 +44,10 @@ TBD
 ## 2. How To Use
 
 ### 2.1. Installation (NuGet)
-TBD
+Easiest wat to install Negum.Game library is to do it via NuGet like so:
+> dotnet add package Negum.Game
+
+Or check it directly [Here](https://www.nuget.org/packages/Negum.Game/)
 
 ### 2.2. Code / Sample Usage
 TBD

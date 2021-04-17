@@ -1,0 +1,85 @@
+name: .NET
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Get Date - Release
+      run: echo "RELEASE_DATE=$(date +%Y%m%d%H%M%s)" >> $GITHUB_ENV
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+        
+    - name: Restore dependencies
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet build --no-restore
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: Negum.Game-${{ env.RELEASE_DATE }}
+        release_name: Negum.Game-${{ env.RELEASE_DATE }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Asset (dll)
+      id: upload-release-asset-dll
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./Negum.Game/bin/Debug/net5.0/Negum.Game.dll
+        asset_name: Negum.Game-${{ env.RELEASE_DATE }}.dll
+        asset_content_type: application/octet-stream
+
+    - name: Upload Release Asset (json)
+      id: upload-release-asset-json
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./Negum.Game/bin/Debug/net5.0/Negum.Game.deps.json
+        asset_name: Negum.Game-${{ env.RELEASE_DATE }}.deps.json
+        asset_content_type: application/xml
+
+    - name: Upload Release Asset (pdb)
+      id: upload-release-asset-pdb
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./Negum.Game/bin/Debug/net5.0/Negum.Game.pdb
+        asset_name: Negum.Game-${{ env.RELEASE_DATE }}.pdb
+        asset_content_type: application/octet-stream
+        
+    - name: Get Date - Nuget
+      run: echo "NUGER_DATE=$(date +%Y).$(date +%m%d).$(date +%H%M)" >> $GITHUB_ENV
+        
+    - name: Build Release
+      run: dotnet build --no-restore --configuration Release -p:Version=0.${{ env.NUGER_DATE }}
+    
+    - name: Pack
+      run: dotnet pack --configuration Release -p:Version=0.${{ env.NUGER_DATE }}
+
+    - name: Nuget Push
+      run: dotnet nuget push ./Negum.Game/bin/Release/*.nupkg --api-key ${{ secrets.NUGET_RW }} --source https://api.nuget.org/v3/index.json
+      
