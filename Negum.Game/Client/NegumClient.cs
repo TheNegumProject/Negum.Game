@@ -112,7 +112,6 @@ namespace Negum.Game.Client
             this.Input.Tick(deltaTime);
             this.Match.Tick(deltaTime);
             this.Screen.Tick(deltaTime);
-            this.Renderer.Tick(deltaTime);
         }
 
         /// <summary>

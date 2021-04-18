@@ -1,3 +1,5 @@
+using System;
+
 namespace Negum.Game.Client.Screen
 {
     /// <summary>
@@ -9,6 +11,11 @@ namespace Negum.Game.Client.Screen
     /// </author>
     public interface IRenderManager : IClientModule
     {
+        /// <summary>
+        /// Renders sprites / textures to screen.
+        /// </summary>
+        /// <param name="callback">Callback which will be used to render sprites.</param>
+        void Render(Action<RenderContext> callback);
     }
 
     /// <summary>
@@ -19,11 +26,13 @@ namespace Negum.Game.Client.Screen
     /// </author>
     public class RenderManager : ClientModule, IRenderManager
     {
-        public override void Tick(double deltaTime)
+        public virtual void Render(Action<RenderContext> callback)
         {
-            // TODO: Render GUI, Stage, Players, Particles, etc.
+            var ctx = new RenderContext();
 
-            this.Client.Screen.CurrentScreen.Render();
+            this.Client.Screen.CurrentScreen.Render(ctx);
+
+            callback?.Invoke(ctx);
         }
     }
 }

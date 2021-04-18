@@ -27,6 +27,7 @@ namespace Negum.Game.Client.Screen
         /// <summary>
         /// Renders current screen.
         /// </summary>
-        void Render();
+        /// <param name="ctx">Context which will be passed to rendering - add sprites which should be rendered.</param>
+        void Render(RenderContext ctx);
     }
 }

@@ -22,7 +22,7 @@ namespace Negum.Game.Client.Screen
         {
         }
 
-        public override void Render()
+        public override void Render(RenderContext ctx)
         {
         }
     }

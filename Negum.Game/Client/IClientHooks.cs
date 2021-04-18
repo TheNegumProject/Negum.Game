@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Negum.Game.Client.Screen;
 
 namespace Negum.Game.Client
 {
@@ -17,6 +19,12 @@ namespace Negum.Game.Client
         /// </summary>
         /// <param name="keyCodes">Clicked keys.</param>
         void OnKeyPressed(IEnumerable<int> keyCodes);
+
+        /// <summary>
+        /// This hook allows code to execute rendering functionality.
+        /// </summary>
+        /// <param name="callback">Action which will be called on rendering.</param>
+        void Render(Action<RenderContext> callback);
     }
 
     /// <summary>
@@ -29,5 +37,8 @@ namespace Negum.Game.Client
     {
         public virtual void OnKeyPressed(IEnumerable<int> keyCodes) =>
             this.Client.Input.OnKeyPressed(keyCodes);
+
+        public void Render(Action<RenderContext> callback) =>
+            this.Client.Renderer.Render(callback);
     }
 }

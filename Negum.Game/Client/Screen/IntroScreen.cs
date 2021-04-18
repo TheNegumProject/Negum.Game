@@ -54,7 +54,7 @@ namespace Negum.Game.Client.Screen
             // TODO: Update intro frame (???)
         }
 
-        public override void Render()
+        public override void Render(RenderContext ctx)
         {
             // TODO: Render intro OR skip directly if none intro provided
         }
