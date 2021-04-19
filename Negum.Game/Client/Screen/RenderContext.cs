@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Negum.Game.Client.Screen
@@ -9,7 +10,7 @@ namespace Negum.Game.Client.Screen
     /// <author>
     /// https://github.com/TheNegumProject/Negum.Game
     /// </author>
-    public class RenderContext
+    public class RenderContext : IEnumerable<KeyValuePair<int, IEnumerable<SpriteContext>>>
     {
         /// <summary>
         /// Key used for gathering data for background layer.
@@ -31,8 +32,8 @@ namespace Negum.Game.Client.Screen
         /// Sprites / Textures are always rendered from lower layer to the top layer (0 - N).
         /// As 0-indexed layer we can understand a background, where 1-indexed layer we can understand as foreground.
         /// </summary>
-        protected IDictionary<int, ICollection<SpriteContext>> Layers { get; } =
-            new Dictionary<int, ICollection<SpriteContext>>();
+        protected IDictionary<int, IEnumerable<SpriteContext>> Layers { get; } =
+            new Dictionary<int, IEnumerable<SpriteContext>>();
 
         public RenderContext()
         {
@@ -53,7 +54,13 @@ namespace Negum.Game.Client.Screen
                 this.Layers.Add(layer, new List<SpriteContext>());
             }
 
-            this.Layers[layer].Add(ctx);
+            ((List<SpriteContext>) this.Layers[layer]).Add(ctx);
         }
+
+        public IEnumerator<KeyValuePair<int, IEnumerable<SpriteContext>>> GetEnumerator() =>
+            this.Layers.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() =>
+            GetEnumerator();
     }
 }
