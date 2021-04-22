@@ -13,7 +13,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Negum.Core" Version="0.2021.421.1816" />
+      <PackageReference Include="Negum.Core" Version="0.2021.422.601" />
     </ItemGroup>
 
 </Project>
