@@ -29,6 +29,11 @@ namespace Negum.Game.Client.Screen
         public IEnumerable<SpriteContext> this[int layer] => this.Layers[layer];
 
         /// <summary>
+        /// Allows for setting global scaling value for the whole rendered single frame.
+        /// </summary>
+        public int Scale { get; set; } = 1;
+
+        /// <summary>
         /// Sprites / Textures are always rendered from lower layer to the top layer (0 - N).
         /// As 0-indexed layer we can understand a background, where 1-indexed layer we can understand as foreground.
         /// </summary>

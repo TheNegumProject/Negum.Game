@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Negum.Core.Models.Sprites;
 
 namespace Negum.Game.Client.Screen
 {
@@ -17,16 +18,6 @@ namespace Negum.Game.Client.Screen
         public IEnumerable<byte> Image { get; }
 
         /// <summary>
-        /// Sprite's position X.
-        /// </summary>
-        public int PosX { get; }
-
-        /// <summary>
-        /// Sprite's position Y.
-        /// </summary>
-        public int PosY { get; }
-
-        /// <summary>
         /// Sprite's width. 
         /// </summary>
         public int Width { get; }
@@ -35,6 +26,20 @@ namespace Negum.Game.Client.Screen
         /// Sprite's height.
         /// </summary>
         public int Height { get; }
+
+        /// <summary>
+        /// Sprite's position X.
+        /// </summary>
+        public int PosX { get; set; }
+
+        /// <summary>
+        /// Sprite's position Y.
+        /// </summary>
+        public int PosY { get; set; }
+
+        public SpriteContext(ISpriteSubFile subFile) : this(subFile.Image, 0, 0, subFile.Width, subFile.Height)
+        {
+        }
 
         public SpriteContext(IEnumerable<byte> image, int posX, int posY, int width, int height)
         {
