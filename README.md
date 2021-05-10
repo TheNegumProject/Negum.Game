@@ -12,9 +12,10 @@ TBD
 - [X] General entities definition like [Player](https://github.com/TheNegumProject/Negum.Game/blob/main/Negum.Game/Common/Entities/IPlayer.cs), [Team](https://github.com/TheNegumProject/Negum.Game/blob/main/Negum.Game/Common/Entities/ITeam.cs), [Match](https://github.com/TheNegumProject/Negum.Game/blob/main/Negum.Game/Common/Entities/IMatch.cs)
 - [ ] Standard fight (match) definition
 - [X] Hook - Accept User input
-- [ ] Hook - Render image / sprite
+- [X] Hook - Render image / sprite
 - [ ] Hook - Play audio / music
-- [ ] Hook - Load font
+- [X] Hook - Load font
+- [ ] Hook - Draw font
 - [ ] Hook - Draw menu
 - [ ] Hook - Draw stage (background, foreground, effects)
 - [ ] Hook - Draw player (sprite, effects)
@@ -44,7 +45,7 @@ TBD
 ## 2. How To Use
 
 ### 2.1. Installation (NuGet)
-Easiest wat to install Negum.Game library is to do it via NuGet like so:
+Easiest way to install Negum.Game library is via NuGet like so:
 > dotnet add package Negum.Game
 
 Or check it directly [Here](https://www.nuget.org/packages/Negum.Game/)
