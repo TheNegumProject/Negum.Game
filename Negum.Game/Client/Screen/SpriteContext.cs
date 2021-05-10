@@ -37,7 +37,7 @@ namespace Negum.Game.Client.Screen
         /// </summary>
         public int PosY { get; set; }
 
-        public SpriteContext(ISpriteSubFile subFile) : this(subFile.Image, 0, 0, subFile.Width, subFile.Height)
+        public SpriteContext(ISpriteSubFile subFile) : this(subFile.Image, 0, 0, subFile.SpriteImageWidth, subFile.SpriteImageHeight)
         {
         }
 
