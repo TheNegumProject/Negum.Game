@@ -1,19 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
         <Title>Negum.Game</Title>
         <Copyright>MIT License</Copyright>
         <PackageProjectUrl>https://github.com/TheNegumProject/Negum.Game</PackageProjectUrl>
-        <PackageLicenseUrl>https://github.com/TheNegumProject/Negum.Game</PackageLicenseUrl>
         <RepositoryUrl>https://github.com/TheNegumProject/Negum.Game</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <Company>The Negum Project</Company>
         <NeutralLanguage>en</NeutralLanguage>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Negum.Core" Version="0.2021.509.1606" />
+      <PackageReference Include="Negum.Core" Version="0.2022.1216.810" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Client" />
+      <Folder Include="Server" />
     </ItemGroup>
 
 </Project>

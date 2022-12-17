@@ -6,12 +6,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{068F6227
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Negum.Game.Tests", "Tests\Negum.Game.Tests\Negum.Game.Tests.csproj", "{8CBC5422-B948-4F8A-8156-07FC8132D480}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Runners", "Runners", "{FC73836C-6F61-40DC-B52B-58EE4012020E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Negum.Game.Tests.Runners.Server.Tcp", "Tests\Runners\Negum.Game.Tests.Runners.Server.Tcp\Negum.Game.Tests.Runners.Server.Tcp.csproj", "{DFA2A4AD-F9C7-4867-B611-B3F1B436C37B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Negum.Game.Tests.Runners.Client.Tcp", "Tests\Runners\Negum.Game.Tests.Runners.Client.Tcp\Negum.Game.Tests.Runners.Client.Tcp.csproj", "{D24E649E-C352-4DFB-95B0-7066BB439CA8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,19 +20,8 @@ Global
 		{8CBC5422-B948-4F8A-8156-07FC8132D480}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CBC5422-B948-4F8A-8156-07FC8132D480}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CBC5422-B948-4F8A-8156-07FC8132D480}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DFA2A4AD-F9C7-4867-B611-B3F1B436C37B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DFA2A4AD-F9C7-4867-B611-B3F1B436C37B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DFA2A4AD-F9C7-4867-B611-B3F1B436C37B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DFA2A4AD-F9C7-4867-B611-B3F1B436C37B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D24E649E-C352-4DFB-95B0-7066BB439CA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D24E649E-C352-4DFB-95B0-7066BB439CA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D24E649E-C352-4DFB-95B0-7066BB439CA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D24E649E-C352-4DFB-95B0-7066BB439CA8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8CBC5422-B948-4F8A-8156-07FC8132D480} = {068F6227-E18C-4C29-AD65-3A9B19A893D7}
-		{FC73836C-6F61-40DC-B52B-58EE4012020E} = {068F6227-E18C-4C29-AD65-3A9B19A893D7}
-		{DFA2A4AD-F9C7-4867-B611-B3F1B436C37B} = {FC73836C-6F61-40DC-B52B-58EE4012020E}
-		{D24E649E-C352-4DFB-95B0-7066BB439CA8} = {FC73836C-6F61-40DC-B52B-58EE4012020E}
 	EndGlobalSection
 EndGlobal
