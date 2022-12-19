@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Negum.Game.Common.Containers;
 
-namespace Negum.Game.Common.Networking;
+namespace Negum.Game.Common.Networking.Packets;
 
 /// <summary>
 /// Responsible for handling specific Packet type. <br />

@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace Negum.Game.Common.Networking;
+namespace Negum.Game.Common.Networking.Packets;
 
 /// <summary>
 /// Packets are a core communication system between client and server. <br />

@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace Negum.Game.Common.Networking;
+namespace Negum.Game.Common.Networking.Packets;
 
 /// <summary>
 /// Provides a convenient way of reading / writing Packets.

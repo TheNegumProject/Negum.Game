@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 using Negum.Core.Containers;
 using Negum.Game.Common.Networking;
+using Negum.Game.Common.Networking.Packets;
 
 namespace Negum.Game.Common.Containers;
 
@@ -18,6 +19,10 @@ public static class NegumGameContainer
         
         // Register all PacketHandlers from current project
         RegisterPacketHandlers(typeof(NegumGameContainer).Assembly);
+        
+        // Register specific singletons - order matter
+        Register<IServerConfiguration, ServerConfiguration>(NegumObjectLifetime.Singleton);
+        Register<IServerConnection, ServerConnection>(NegumObjectLifetime.Singleton);
     }
     
     /// <summary>

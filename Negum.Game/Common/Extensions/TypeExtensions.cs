@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Negum.Game.Common.Networking;
+using Negum.Game.Common.Networking.Packets;
 
 namespace Negum.Game.Common.Extensions;
 

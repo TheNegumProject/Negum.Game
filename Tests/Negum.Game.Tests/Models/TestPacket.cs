@@ -1,5 +1,6 @@
 using System.IO;
 using Negum.Game.Common.Networking;
+using Negum.Game.Common.Networking.Packets;
 
 namespace Negum.Game.Tests.Models;
 

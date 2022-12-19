@@ -1,6 +1,6 @@
 using System;
 
-namespace Negum.Game.Common.Networking;
+namespace Negum.Game.Common.Networking.Packets;
 
 /// <summary>
 /// Indicates that the current PacketHandler should be called on specified side.

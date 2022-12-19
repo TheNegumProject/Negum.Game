@@ -6,12 +6,12 @@ using System.Reflection;
 using Negum.Core.Exceptions;
 using Negum.Game.Common.Extensions;
 
-namespace Negum.Game.Common.Networking;
+namespace Negum.Game.Common.Networking.Packets;
 
 /// <summary>
 /// Stores information about all currently known Packet Handlers.
 /// </summary>
-internal interface IPacketHandlerRegistry
+public interface IPacketHandlerRegistry
 {
     /// <summary>
     /// Registers all classes of type <see cref="IPacketHandler{TPacket}"/> from specified <see cref="Assembly"/>.
@@ -24,11 +24,11 @@ internal interface IPacketHandlerRegistry
     /// <param name="side">Side for which PacketHandlers should be returned.</param>
     /// <typeparam name="TPacket">Packet for which PacketHandlers should be returned.</typeparam>
     /// <returns>Returns a snapshot of currently registered PacketHandlers.</returns>
-    IEnumerable<IPacketHandler<TPacket>> GetPacketHandlers<TPacket>(Side side)
+    IEnumerable<IPacketHandler<TPacket>> GetPacketHandlers<TPacket>(Side side) // TODO: remove generic type
         where TPacket : IPacket;
 }
 
-internal class PacketHandlerRegistry : IPacketHandlerRegistry
+public class PacketHandlerRegistry : IPacketHandlerRegistry
 {
     private static ICollection<PacketHandlerRegistryEntry> Entries { get; } = new HashSet<PacketHandlerRegistryEntry>();
 
@@ -84,7 +84,7 @@ internal class PacketHandlerRegistry : IPacketHandlerRegistry
     }
 }
 
-internal class PacketHandlerRegistryEntry
+public class PacketHandlerRegistryEntry
 { 
     internal PacketHandlerRegistryEntry(Side side)
     {
