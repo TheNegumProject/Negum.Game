@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using Negum.Core.Containers;
+using Negum.Game.Common.Networking;
 using Negum.Game.Common.Networking.Packets;
 
 namespace Negum.Game.Common.Containers;
@@ -13,9 +14,12 @@ public static class NegumGameContainer
 {
     static NegumGameContainer()
     {
+        // Configurations - singletons
+        Register<IServerConfiguration, ServerConfiguration>(NegumObjectLifetime.Singleton);
+        
         // Register all interface-class pairs in Negum.Game namespace
         RegisterInterfaceClassPairs("Negum.Game", typeof(NegumGameContainer));
-        
+
         // Register all PacketHandlers from current project
         RegisterPacketHandlers(typeof(NegumGameContainer).Assembly);
     }

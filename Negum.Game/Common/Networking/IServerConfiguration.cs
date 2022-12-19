@@ -37,6 +37,20 @@ public class ServerConfiguration : IServerConfiguration
     public string HostName { get; private set; } = "localhost";
     public int Port { get; private set; }
 
+    /// <summary>
+    /// Stores information about local hostname ("localhost" or IP)
+    /// </summary>
+    private string LocalHostName { get; set; } = "localhost";
+
+    /// <summary>
+    /// Stores information about local server port.
+    /// </summary>
+    private int LocalPort { get; set; }
+
+    public ServerConfiguration()
+    {
+    }
+
     public void Connect(string hostname, int port)
     { 
         if (port is < IPEndPoint.MinPort or > IPEndPoint.MaxPort)
@@ -50,8 +64,14 @@ public class ServerConfiguration : IServerConfiguration
 
     public void ConnectToLocalServer()
     {
-        var helper = NegumGameContainer.Resolve<INetworkHelper>();
+        if (LocalPort == default)
+        {
+            var helper = NegumGameContainer.Resolve<INetworkHelper>();
 
-        Connect(helper.GetLocalAddress(), helper.GetNextFreePort());
+            LocalHostName = helper.GetLocalAddress();
+            LocalPort = helper.GetNextFreePort();
+        }
+
+        Connect(LocalHostName, LocalPort);
     }
 }
