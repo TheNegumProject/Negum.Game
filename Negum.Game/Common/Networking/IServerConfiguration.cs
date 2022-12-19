@@ -25,19 +25,16 @@ public interface IServerConfiguration
     /// <param name="hostname"></param>
     /// <param name="port"></param>
     void Connect(string hostname, int port);
+
+    /// <summary>
+    /// Connects to local server aka localhost.
+    /// </summary>
+    void ConnectToLocalServer();
 }
 
 public class ServerConfiguration : IServerConfiguration
 {
-    public ServerConfiguration()
-    {
-        var helper = NegumGameContainer.Resolve<INetworkHelper>();
-
-        HostName = helper.GetLocalAddress();
-        Port = helper.GetNextFreePort();
-    }
-    
-    public string HostName { get; private set; }
+    public string HostName { get; private set; } = "localhost";
     public int Port { get; private set; }
 
     public void Connect(string hostname, int port)
@@ -49,5 +46,12 @@ public class ServerConfiguration : IServerConfiguration
 
         Port = port;
         HostName = hostname;
+    }
+
+    public void ConnectToLocalServer()
+    {
+        var helper = NegumGameContainer.Resolve<INetworkHelper>();
+
+        Connect(helper.GetLocalAddress(), helper.GetNextFreePort());
     }
 }

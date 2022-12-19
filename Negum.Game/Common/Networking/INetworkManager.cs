@@ -32,6 +32,6 @@ public class NetworkManager : INetworkManager
         await NegumGameContainer.Resolve<IServerConnection>().SendPacketAsync(packet);
         
         // Process Packet - Client
-        // await NegumGameContainer.Resolve<IPacketProcessor>().ProcessPacketAsync(packet, Side.Client); // TODO: Implement
+        await NegumGameContainer.Resolve<IPacketProcessor>().ProcessPacketAsync(packet, Side.Client);
     }
 }

@@ -20,25 +20,12 @@ public interface IServerConnection
 
 public class ServerConnection : IServerConnection
 {
-    private TcpClient Client { get; }
-    private IPacketSerializer PacketSerializer { get; }
-    private IServerConfiguration ServerConfiguration { get; }
-
-    public ServerConnection()
-    {
-        Client = new TcpClient();
-        
-        PacketSerializer = NegumGameContainer.Resolve<IPacketSerializer>();
-        ServerConfiguration = NegumGameContainer.Resolve<IServerConfiguration>();
-    }
-    
     public async Task SendPacketAsync(IPacket packet)
     {
-        var packetData = PacketSerializer.Serialize(packet);
-        
-        await Client.ConnectAsync(ServerConfiguration.HostName, ServerConfiguration.Port);
-        
-        var clientStream = Client.GetStream();
+        var packetData = NegumGameContainer.Resolve<IPacketSerializer>().Serialize(packet);
+        var serverConfig = NegumGameContainer.Resolve<IServerConfiguration>();
+        var client = new TcpClient(serverConfig.HostName, serverConfig.Port);
+        var clientStream = client.GetStream();
         
         await clientStream.WriteAsync(packetData);
     }

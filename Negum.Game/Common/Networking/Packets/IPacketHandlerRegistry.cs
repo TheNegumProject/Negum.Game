@@ -22,10 +22,9 @@ public interface IPacketHandlerRegistry
     /// <summary>
     /// </summary>
     /// <param name="side">Side for which PacketHandlers should be returned.</param>
-    /// <typeparam name="TPacket">Packet for which PacketHandlers should be returned.</typeparam>
+    /// <param name="packet">Packet for which PacketHandlers should be returned.</param>
     /// <returns>Returns a snapshot of currently registered PacketHandlers.</returns>
-    IEnumerable<IPacketHandler<TPacket>> GetPacketHandlers<TPacket>(Side side) // TODO: remove generic type
-        where TPacket : IPacket;
+    IEnumerable<object> GetPacketHandlers(IPacket packet, Side side);
 }
 
 public class PacketHandlerRegistry : IPacketHandlerRegistry
@@ -40,11 +39,10 @@ public class PacketHandlerRegistry : IPacketHandlerRegistry
             .ForEach(ProcessPacketHandlerType);
     }
 
-    public IEnumerable<IPacketHandler<TPacket>> GetPacketHandlers<TPacket>(Side side) 
-        where TPacket : IPacket =>
+    public IEnumerable<object> GetPacketHandlers(IPacket packet, Side side) =>
         Entries
             .Single(en => en.Side == side)
-            .GetPacketHandlers<TPacket>();
+            .GetPacketHandlers(packet);
 
     private static void ProcessPacketHandlerType(Type packetHandlerClassType)
     {
@@ -109,12 +107,10 @@ public class PacketHandlerRegistryEntry
         Handlers[packetType].Add(packetHandlerInstance);
     }
 
-    public IEnumerable<IPacketHandler<TPacket>> GetPacketHandlers<TPacket>() 
-        where TPacket : IPacket => 
-        Handlers.ContainsKey(typeof(TPacket)) 
-            ? Handlers[typeof(TPacket)]
-                .Cast<IPacketHandler<TPacket>>()
+    public IEnumerable<object> GetPacketHandlers(IPacket packet) => 
+        Handlers.ContainsKey(packet.GetType()) 
+            ? Handlers[packet.GetType()]
                 .ToList()
                 .AsReadOnly() 
-            : Array.Empty<IPacketHandler<TPacket>>();
+            : Array.Empty<object>();
 }
