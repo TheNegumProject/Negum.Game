@@ -28,5 +28,7 @@ public class ServerConnection : IServerConnection
         var clientStream = client.GetStream();
         
         await clientStream.WriteAsync(packetData);
+        
+        // TODO: Process Response from Server
     }
 }
