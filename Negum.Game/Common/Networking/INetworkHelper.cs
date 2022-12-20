@@ -23,6 +23,8 @@ public interface INetworkHelper
 
 public class NetworkHelper : INetworkHelper
 {
+    private int ReservedPort { get; set; }
+    
     public string GetLocalAddress()
     {
         var hostname = Dns.GetHostName();
@@ -36,6 +38,11 @@ public class NetworkHelper : INetworkHelper
 
     public int GetNextFreePort()
     {
+        if (ReservedPort != default)
+        {
+            return ReservedPort;
+        }
+        
         var properties = IPGlobalProperties.GetIPGlobalProperties();
 
         var tcpListeners = properties.GetActiveTcpListeners();
@@ -47,10 +54,12 @@ public class NetworkHelper : INetworkHelper
 
         for (var port = IPEndPoint.MaxPort; port > IPEndPoint.MinPort; --port)
         {
-            if (!occupiedPorts.Contains(port))
+            if (occupiedPorts.Contains(port))
             {
-                return port;
+                continue;
             }
+            
+            return ReservedPort = port;
         }
 
         throw new SystemException($"Cannot find any available port.");

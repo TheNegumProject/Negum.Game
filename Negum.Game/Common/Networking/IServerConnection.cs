@@ -1,4 +1,3 @@
-using System.IO;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using Negum.Game.Common.Containers;
@@ -30,35 +29,17 @@ public class ServerConnection : IServerConnection
     
     public async Task SendPacketAsync(IPacket packet)
     {
-        await SendPacketToServerAsync(packet);
-        await ProcessServerResponseAsync();
-    }
-
-    private async Task SendPacketToServerAsync(IPacket packet)
-    {
-        var packetData = NegumGameContainer.Resolve<IPacketSerializer>().Serialize(packet);
+        var networkPacketSerializer = NegumGameContainer.Resolve<INetworkPacketSerializer>();
+        
+        // Send to Server
+        
         var serverConfig = NegumGameContainer.Resolve<IServerConfiguration>();
-
         await Client.ConnectAsync(serverConfig.HostName, serverConfig.Port);
-        await Client.GetStream().WriteAsync(packetData);
-    }
-
-    private async Task ProcessServerResponseAsync()
-    {
-        var stream = Client.GetStream();
-        var reader = new BinaryReader(stream);
-        var packetDataLength = reader.ReadInt64();
-        var packetData = new byte[packetDataLength];
-
-        var bytesRead = await stream.ReadAsync(packetData);
-
-        if (bytesRead == 0)
-        {
-            return;
-        }
-
-        var packet = NegumGameContainer.Resolve<IPacketSerializer>().Deserialize(packetData);
-
-        await NegumGameContainer.Resolve<IPacketProcessor>().ProcessPacketAsync(packet, Side.Client);
+        await networkPacketSerializer.WriteAsync(Client.GetStream(), packet);
+        
+        // Process Server Response
+        
+        var responsePacket = await networkPacketSerializer.ReadAsync(Client.GetStream());
+        await NegumGameContainer.Resolve<IPacketProcessor>().ProcessPacketAsync(responsePacket, Side.Client);
     }
 }

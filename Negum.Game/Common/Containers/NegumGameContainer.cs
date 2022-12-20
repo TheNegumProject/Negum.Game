@@ -24,6 +24,7 @@ public static class NegumGameContainer
         Register<IServerConfiguration, ServerConfiguration>(NegumObjectLifetime.Singleton);
         Register<IServerConnection, ServerConnection>(NegumObjectLifetime.Singleton);
         Register<IServerListener, ServerListener>(NegumObjectLifetime.Singleton);
+        Register<INetworkHelper, NetworkHelper>(NegumObjectLifetime.Singleton);
     }
     
     /// <summary>
