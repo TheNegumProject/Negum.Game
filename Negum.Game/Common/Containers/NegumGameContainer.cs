@@ -7,21 +7,23 @@ using Negum.Game.Common.Networking.Packets;
 namespace Negum.Game.Common.Containers;
 
 /// <summary>
-/// Container used in Negum.Game project.
+/// Container used in Negum.Game project. <br />
 /// Contains wrappers for <see cref="NegumContainer"/>.
 /// </summary>
 public static class NegumGameContainer
 {
     static NegumGameContainer()
     {
-        // Configurations - singletons
-        Register<IServerConfiguration, ServerConfiguration>(NegumObjectLifetime.Singleton);
-        
         // Register all interface-class pairs in Negum.Game namespace
         RegisterInterfaceClassPairs("Negum.Game", typeof(NegumGameContainer));
 
         // Register all PacketHandlers from current project
         RegisterPacketHandlers(typeof(NegumGameContainer).Assembly);
+        
+        // Singletons
+        Register<IServerConfiguration, ServerConfiguration>(NegumObjectLifetime.Singleton);
+        Register<IServerConnection, ServerConnection>(NegumObjectLifetime.Singleton);
+        Register<IServerListener, ServerListener>(NegumObjectLifetime.Singleton);
     }
     
     /// <summary>
