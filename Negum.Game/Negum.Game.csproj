@@ -18,7 +18,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Client" />
+      <Folder Include="Client\Networking\Handlers" />
+      <Folder Include="Server\Networking\Handlers" />
     </ItemGroup>
 
 </Project>

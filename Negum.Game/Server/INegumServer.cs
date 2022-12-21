@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Negum.Game.Common.Containers;
 using Negum.Game.Common.Networking;
+using Negum.Game.Server.Networking.Packets;
 
 namespace Negum.Game.Server;
 
@@ -33,8 +34,14 @@ public interface INegumServer
 
 public class NegumServer : INegumServer
 {
-    public virtual async Task StartAsync(int port = default, CancellationToken token = default) => 
+    public virtual async Task StartAsync(int port = default, CancellationToken token = default)
+    {
+        await NegumGameContainer
+            .Resolve<INetworkManager>()
+            .SendPacketAsync(new InitializeServerPacket(), token);
+        
         await NegumGameContainer.Resolve<IServerListener>().StartAsync(port, token);
+    }
 
     public virtual async Task StopAsync(CancellationToken token = default) => 
         await NegumGameContainer.Resolve<IServerListener>().StopAsync(token);
