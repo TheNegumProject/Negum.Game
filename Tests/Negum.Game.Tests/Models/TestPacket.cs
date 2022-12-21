@@ -6,6 +6,7 @@ namespace Negum.Game.Tests.Models;
 public class TestPacket : AbstractPacket
 {
     public TestPacket() // Required for deserialization
+        : base()
     {
         SampleString = string.Empty;
     }

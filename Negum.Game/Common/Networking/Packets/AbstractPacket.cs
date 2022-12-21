@@ -7,6 +7,10 @@ namespace Negum.Game.Common.Networking.Packets;
 /// </summary>
 public abstract class AbstractPacket : IPacket
 {
+    public AbstractPacket() // Required for deserialization
+    {
+    }
+    
     public virtual void Read(Stream stream) => 
         Read(new BinaryReader(stream));
 

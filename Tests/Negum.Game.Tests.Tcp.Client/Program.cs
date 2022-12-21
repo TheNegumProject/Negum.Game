@@ -23,5 +23,6 @@ await NegumGameContainer
         "Testing Local Server", 
         123, 
         456.789));
-        
+       
+// Stop local server
 await NegumGameContainer.Resolve<IServerListener>().StopAsync();
