@@ -72,7 +72,7 @@ public class ServerListener : IServerListener
 
         // Send Response to Client
 
-        var responsePacket = new EmptyPacket(); // TODO: Add appropriate response Packet
+        var responsePacket = await NegumGameContainer.Resolve<IServerResponseBuilder>().BuildAsync(token);
         await networkPacketSerializer.WriteAsync(stream, responsePacket, token);
     }
 }
