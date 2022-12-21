@@ -3,21 +3,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Negum.Game.Common.Containers;
 using Negum.Game.Common.Networking.Packets;
+using Negum.Game.Common.Tasks;
 
 namespace Negum.Game.Common.Networking;
 
 /// <summary>
 /// Responsible for listening for incoming messages from clients.
 /// </summary>
-public interface IServerListener
+public interface IServerListener : IRunnableService
 {
-    /// <summary>
-    /// Starts listening for incoming requests.
-    /// </summary>
-    /// <param name="port">Port which should be used by local server; leave empty for autodetect.</param>
-    /// <param name="token"></param>
-    /// <returns></returns>
-    Task RunAsync(int port = default, CancellationToken token = default);
 }
 
 public class ServerListener : IServerListener

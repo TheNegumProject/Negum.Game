@@ -22,7 +22,7 @@ public class ServerResponseBuilder : IServerResponseBuilder
 {
     public virtual Task<IPacket> BuildAsync(IPacket packet, CancellationToken token = default)
     {
-        // TODO: Build appropriate response Packet
+        // TODO: Build appropriate response Packet - maybe return OkPacket by default or GameState (: IPacket) for SyncPacket (?)
         return Task.FromResult((IPacket)new EmptyPacket());
     }
 }

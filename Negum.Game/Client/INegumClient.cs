@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Negum.Game.Client.Networking.Packets;
 using Negum.Game.Common.Containers;
 using Negum.Game.Common.Networking;
+using Negum.Game.Common.Tasks;
 using Negum.Game.Server;
 
 namespace Negum.Game.Client;
@@ -10,20 +11,13 @@ namespace Negum.Game.Client;
 /// <summary>
 /// Represents main game Client.
 /// </summary>
-public interface INegumClient
+public interface INegumClient : IRunnableService
 {
-    /// <summary>
-    /// Starts Client with local Server.
-    /// </summary>
-    /// <param name="port"></param>
-    /// <param name="token"></param>
-    /// <returns></returns>
-    Task RunAsync(int port = default, CancellationToken token = default);
 }
 
 /// <summary>
 /// Avoid initializing this class. <br />
-/// For starting the Client please see: <see cref="NegumClientRunner"/>
+/// For starting the Client please see: <see cref="NegumRunner"/>
 /// </summary>
 public class NegumClient : INegumClient
 {

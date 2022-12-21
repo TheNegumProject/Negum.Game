@@ -9,7 +9,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Negum.Game\Negum.Game.csproj" />
-      <ProjectReference Include="..\Negum.Game.Tests\Negum.Game.Tests.csproj" />
     </ItemGroup>
 
 </Project>
