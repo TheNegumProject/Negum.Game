@@ -24,7 +24,7 @@ public interface IPacketSerializer
 
 public class PacketSerializer : IPacketSerializer
 {
-    public byte[] Serialize(IPacket packet)
+    public virtual byte[] Serialize(IPacket packet)
     {
         var stream = new MemoryStream();
         var writer = new BinaryWriter(stream);
@@ -37,7 +37,7 @@ public class PacketSerializer : IPacketSerializer
         return stream.ToArray();
     }
 
-    public IPacket Deserialize(byte[] packetData)
+    public virtual IPacket Deserialize(byte[] packetData)
     {
         var stream = new MemoryStream(packetData, false);
 

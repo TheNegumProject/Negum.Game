@@ -21,7 +21,7 @@ public interface INetworkManager
 
 public class NetworkManager : INetworkManager
 {
-    public async Task SendPacketAsync<TPacket>(TPacket packet, CancellationToken token = default) 
+    public virtual async Task SendPacketAsync<TPacket>(TPacket packet, CancellationToken token = default) 
         where TPacket : IPacket
     {
         // Process Packet - Server

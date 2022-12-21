@@ -32,7 +32,7 @@ public class ServerListener : IServerListener
     private bool Running { get; set; }
     private TcpListener? Server { get; set; }
     
-    public async Task StartAsync(int port = default, CancellationToken token = default)
+    public virtual async Task StartAsync(int port = default, CancellationToken token = default)
     {
         if (Running)
         {
@@ -54,7 +54,7 @@ public class ServerListener : IServerListener
         }
     }
 
-    public Task StopAsync(CancellationToken token = default)
+    public virtual Task StopAsync(CancellationToken token = default)
     {
         Running = false;
         return Task.CompletedTask;

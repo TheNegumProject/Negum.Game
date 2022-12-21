@@ -22,7 +22,7 @@ public interface IPacketProcessor
 
 public class PacketProcessor : IPacketProcessor
 {
-    public Task ProcessPacketAsync(IPacket packet, Side side, CancellationToken token = default)
+    public virtual Task ProcessPacketAsync(IPacket packet, Side side, CancellationToken token = default)
     {
         const string handleAsyncCallbackName = nameof(IPacketHandler<IPacket>.HandleAsync);
         

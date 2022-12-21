@@ -31,7 +31,7 @@ public class PacketHandlerRegistry : IPacketHandlerRegistry
 {
     private static ICollection<PacketHandlerRegistryEntry> Entries { get; } = new HashSet<PacketHandlerRegistryEntry>();
 
-    public void RegisterPacketHandlers(Assembly assembly)
+    public virtual void RegisterPacketHandlers(Assembly assembly)
     {
         assembly.GetTypes()
             .Where(type => type.IsPacketHandler())
@@ -39,7 +39,7 @@ public class PacketHandlerRegistry : IPacketHandlerRegistry
             .ForEach(ProcessPacketHandlerType);
     }
 
-    public IEnumerable<object> GetPacketHandlers(IPacket packet, Side side) =>
+    public virtual IEnumerable<object> GetPacketHandlers(IPacket packet, Side side) =>
         Entries
             .Single(en => en.Side == side)
             .GetPacketHandlers(packet);
@@ -84,7 +84,7 @@ public class PacketHandlerRegistry : IPacketHandlerRegistry
 
 public class PacketHandlerRegistryEntry
 { 
-    internal PacketHandlerRegistryEntry(Side side)
+    public PacketHandlerRegistryEntry(Side side)
     {
         Side = side;
     }
@@ -97,7 +97,7 @@ public class PacketHandlerRegistryEntry
     /// </summary>
     private IDictionary<Type, ICollection<object>> Handlers { get; } = new ConcurrentDictionary<Type, ICollection<object>>();
 
-    public void AddPacketHandler(Type packetType, object packetHandlerInstance)
+    public virtual void AddPacketHandler(Type packetType, object packetHandlerInstance)
     {
         if (!Handlers.ContainsKey(packetType))
         {
@@ -107,7 +107,7 @@ public class PacketHandlerRegistryEntry
         Handlers[packetType].Add(packetHandlerInstance);
     }
 
-    public IEnumerable<object> GetPacketHandlers(IPacket packet) => 
+    public virtual IEnumerable<object> GetPacketHandlers(IPacket packet) => 
         Handlers.ContainsKey(packet.GetType()) 
             ? Handlers[packet.GetType()]
                 .ToList()

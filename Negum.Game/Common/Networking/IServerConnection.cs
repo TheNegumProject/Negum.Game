@@ -29,7 +29,7 @@ public class ServerConnection : IServerConnection
     
     private TcpClient Client { get; }
     
-    public async Task SendPacketAsync(IPacket packet, CancellationToken token = default)
+    public virtual async Task SendPacketAsync(IPacket packet, CancellationToken token = default)
     {
         var networkPacketSerializer = NegumGameContainer.Resolve<INetworkPacketSerializer>();
         

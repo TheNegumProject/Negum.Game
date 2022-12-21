@@ -20,7 +20,7 @@ public interface IServerResponseBuilder
 
 public class ServerResponseBuilder : IServerResponseBuilder
 {
-    public Task<IPacket> BuildAsync(IPacket packet, CancellationToken token = default)
+    public virtual Task<IPacket> BuildAsync(IPacket packet, CancellationToken token = default)
     {
         // TODO: Build appropriate response Packet
         return Task.FromResult((IPacket)new EmptyPacket());

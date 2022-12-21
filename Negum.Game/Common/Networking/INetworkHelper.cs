@@ -25,7 +25,7 @@ public class NetworkHelper : INetworkHelper
 {
     private int ReservedPort { get; set; }
     
-    public string GetLocalAddress()
+    public virtual string GetLocalAddress()
     {
         var hostname = Dns.GetHostName();
         var hostEntry = Dns.GetHostEntry(hostname);
@@ -36,7 +36,7 @@ public class NetworkHelper : INetworkHelper
         return localIp;
     }
 
-    public int GetNextFreePort()
+    public virtual int GetNextFreePort()
     {
         if (ReservedPort != default)
         {

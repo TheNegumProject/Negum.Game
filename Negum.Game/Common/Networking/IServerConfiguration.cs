@@ -51,7 +51,7 @@ public class ServerConfiguration : IServerConfiguration
     {
     }
 
-    public void Connect(string hostname, int port)
+    public virtual void Connect(string hostname, int port)
     { 
         if (port is < IPEndPoint.MinPort or > IPEndPoint.MaxPort)
         {
@@ -62,7 +62,7 @@ public class ServerConfiguration : IServerConfiguration
         HostName = hostname;
     }
 
-    public void ConnectToLocalServer()
+    public virtual void ConnectToLocalServer()
     {
         if (LocalPort == default)
         {

@@ -33,7 +33,7 @@ public interface INetworkPacketSerializer
 
 public class NetworkPacketSerializer : INetworkPacketSerializer
 {
-    public async Task<IPacket> ReadAsync(Stream stream, CancellationToken token = default)
+    public virtual async Task<IPacket> ReadAsync(Stream stream, CancellationToken token = default)
     {
         var lengthBytes = new byte[sizeof(int)];
         var readBytes = await stream.ReadAsync(lengthBytes, token);
@@ -55,7 +55,7 @@ public class NetworkPacketSerializer : INetworkPacketSerializer
         return NegumGameContainer.Resolve<IPacketSerializer>().Deserialize(packetData);
     }
 
-    public async Task WriteAsync(Stream stream, IPacket packet, CancellationToken token = default)
+    public virtual async Task WriteAsync(Stream stream, IPacket packet, CancellationToken token = default)
     {
         var packetData = NegumGameContainer.Resolve<IPacketSerializer>().Serialize(packet);
         var lengthBytes = BitConverter.GetBytes(packetData.Length);
