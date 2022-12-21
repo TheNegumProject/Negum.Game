@@ -39,11 +39,9 @@ public class ServerListener : IServerListener
         Running = true;
 
         var networkHelper = NegumGameContainer.Resolve<INetworkHelper>();
-        // var address = networkHelper.GetLocalAddress();
-        // var localAddr = IPAddress.Parse(address);
         port = port > 0 ? port : networkHelper.GetNextFreePort();
 
-        Server = TcpListener.Create(port); // new TcpListener(localAddr, port);
+        Server = TcpListener.Create(port);
         Server.Start();
 
         while (Running)

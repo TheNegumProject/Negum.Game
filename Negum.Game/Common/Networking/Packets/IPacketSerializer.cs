@@ -30,8 +30,7 @@ public class PacketSerializer : IPacketSerializer
         var writer = new BinaryWriter(stream);
         var packetType = packet.GetType();
         
-        writer.Write(packetType.Assembly.FullName ?? throw new NegumException($"Unknown assembly of Packet of type: {packetType.FullName}"));
-        writer.Write(packetType.FullName ?? throw new NegumException($"Unknown Packet type"));
+        writer.Write(packetType.AssemblyQualifiedName ?? throw new NegumException($"Cannot determine Packet type assembly qualified name: {packetType}"));
         
         packet.Write(stream);
         
@@ -45,15 +44,13 @@ public class PacketSerializer : IPacketSerializer
         stream.Position = 0;
         
         var reader = new BinaryReader(stream);
-        
-        var assemblyFullName = reader.ReadString();
-        var packetTypeFullName = reader.ReadString();
-        
-        var packetHandle = Activator.CreateInstanceFrom(assemblyFullName, packetTypeFullName);
-        
-        if (packetHandle?.Unwrap() is not IPacket packet)
+        var assemblyQualifiedName = reader.ReadString(); 
+        var packetType = Type.GetType(assemblyQualifiedName) ?? throw new NegumException($"Cannot find type: '{assemblyQualifiedName}'");
+        var packetInstance = Activator.CreateInstance(packetType);
+
+        if (packetInstance is not IPacket packet)
         {
-            throw new NegumException($"Cannot create an instance of Packet of type: [{nameof(assemblyFullName)}: {assemblyFullName}, {nameof(packetTypeFullName)}: {packetTypeFullName}]");
+            throw new NegumException($"Packet type '{packetType}' is not a valid IPacket implementation.");
         }
         
         packet.Read(stream);

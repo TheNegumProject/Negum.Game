@@ -1,6 +1,5 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Negum.Core.Exceptions;
 using Negum.Game.Common.Containers;
 
 namespace Negum.Game.Common.Networking.Packets;
@@ -23,18 +22,15 @@ public class PacketProcessor : IPacketProcessor
 {
     public Task ProcessPacketAsync(IPacket packet, Side side)
     {
+        const string handleAsyncCallbackName = nameof(IPacketHandler<IPacket>.HandleAsync);
+        
         var handlers = NegumGameContainer.Resolve<IPacketHandlerRegistry>().GetPacketHandlers(packet, side);
-        var handleAsyncCallback = typeof(IPacketHandler<>).GetMethod(nameof(IPacketHandler<IPacket>.HandleAsync));
-
-        if (handleAsyncCallback is null)
-        {
-            throw new NegumException($"Cannot find HandleAsync method.");
-        }
 
         var tasks = handlers
             .Select(handler =>
             {
-                var result = handleAsyncCallback.Invoke(handler, new object?[] { packet });
+                var handleAsyncCallback = handler.GetType().GetMethod(handleAsyncCallbackName);
+                var result = handleAsyncCallback?.Invoke(handler, new object?[] { packet });
 
                 if (result is null)
                 {

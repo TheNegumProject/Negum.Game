@@ -6,6 +6,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{068F6227
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Negum.Game.Tests", "Tests\Negum.Game.Tests\Negum.Game.Tests.csproj", "{8CBC5422-B948-4F8A-8156-07FC8132D480}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Negum.Game.Tests.Tcp.Client", "Tests\Negum.Game.Tests.Tcp.Client\Negum.Game.Tests.Tcp.Client.csproj", "{2EE2D44A-CBAB-4413-9B26-90F626AFF83F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Negum.Game.Tests.Tcp.Server", "Tests\Negum.Game.Tests.Tcp.Server\Negum.Game.Tests.Tcp.Server.csproj", "{5647F10A-64FB-4EDB-8C47-0D288D338977}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,8 +24,18 @@ Global
 		{8CBC5422-B948-4F8A-8156-07FC8132D480}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CBC5422-B948-4F8A-8156-07FC8132D480}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CBC5422-B948-4F8A-8156-07FC8132D480}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EE2D44A-CBAB-4413-9B26-90F626AFF83F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EE2D44A-CBAB-4413-9B26-90F626AFF83F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EE2D44A-CBAB-4413-9B26-90F626AFF83F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EE2D44A-CBAB-4413-9B26-90F626AFF83F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5647F10A-64FB-4EDB-8C47-0D288D338977}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5647F10A-64FB-4EDB-8C47-0D288D338977}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5647F10A-64FB-4EDB-8C47-0D288D338977}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5647F10A-64FB-4EDB-8C47-0D288D338977}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8CBC5422-B948-4F8A-8156-07FC8132D480} = {068F6227-E18C-4C29-AD65-3A9B19A893D7}
+		{2EE2D44A-CBAB-4413-9B26-90F626AFF83F} = {068F6227-E18C-4C29-AD65-3A9B19A893D7}
+		{5647F10A-64FB-4EDB-8C47-0D288D338977} = {068F6227-E18C-4C29-AD65-3A9B19A893D7}
 	EndGlobalSection
 EndGlobal

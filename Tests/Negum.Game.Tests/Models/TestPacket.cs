@@ -1,11 +1,15 @@
 using System.IO;
-using Negum.Game.Common.Networking;
 using Negum.Game.Common.Networking.Packets;
 
 namespace Negum.Game.Tests.Models;
 
 public class TestPacket : AbstractPacket
 {
+    public TestPacket() // Required for deserialization
+    {
+        SampleString = string.Empty;
+    }
+
     public TestPacket(string sampleString, int sampleInt, double sampleDouble)
     {
         SampleString = sampleString;

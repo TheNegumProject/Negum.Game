@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Negum.Game\Negum.Game.csproj" />
+      <ProjectReference Include="..\Negum.Game.Tests\Negum.Game.Tests.csproj" />
+    </ItemGroup>
+
+</Project>

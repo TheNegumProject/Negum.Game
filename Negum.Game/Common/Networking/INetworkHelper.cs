@@ -30,7 +30,7 @@ public class NetworkHelper : INetworkHelper
         var hostname = Dns.GetHostName();
         var hostEntry = Dns.GetHostEntry(hostname);
         var addresses = hostEntry.AddressList;
-        var localhost = addresses.First(address => address.ToString().StartsWith("192"));
+        var localhost = addresses.First(address => address.ToString().StartsWith("192") || address.ToString().StartsWith("127"));
         var localIp = localhost.ToString();
 
         return localIp;
@@ -44,10 +44,8 @@ public class NetworkHelper : INetworkHelper
         }
         
         var properties = IPGlobalProperties.GetIPGlobalProperties();
-
         var tcpListeners = properties.GetActiveTcpListeners();
         var udpListeners = properties.GetActiveUdpListeners();
-
         var occupiedPorts = tcpListeners.Select(p => p.Port).ToList();
         
         occupiedPorts.AddRange(udpListeners.Select(p => p.Port).ToList());
