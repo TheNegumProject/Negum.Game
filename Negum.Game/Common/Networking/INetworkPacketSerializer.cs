@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Negum.Core.Exceptions;
 using Negum.Game.Common.Containers;
@@ -16,24 +17,26 @@ public interface INetworkPacketSerializer
     /// Reads Packet from the given Stream.
     /// </summary>
     /// <param name="stream"></param>
+    /// <param name="token"></param>
     /// <returns></returns>
-    Task<IPacket> ReadAsync(Stream stream);
-    
+    Task<IPacket> ReadAsync(Stream stream, CancellationToken token = default);
+
     /// <summary>
     /// Writes Packet into Stream.
     /// </summary>
     /// <param name="stream"></param>
     /// <param name="packet"></param>
+    /// <param name="token"></param>
     /// <returns></returns>
-    Task WriteAsync(Stream stream, IPacket packet);
+    Task WriteAsync(Stream stream, IPacket packet, CancellationToken token = default);
 }
 
 public class NetworkPacketSerializer : INetworkPacketSerializer
 {
-    public async Task<IPacket> ReadAsync(Stream stream)
+    public async Task<IPacket> ReadAsync(Stream stream, CancellationToken token = default)
     {
         var lengthBytes = new byte[sizeof(int)];
-        var readBytes = await stream.ReadAsync(lengthBytes);
+        var readBytes = await stream.ReadAsync(lengthBytes, token);
 
         if (readBytes != lengthBytes.Length)
         {
@@ -42,7 +45,7 @@ public class NetworkPacketSerializer : INetworkPacketSerializer
 
         var packetDataLength = BitConverter.ToInt32(lengthBytes);
         var packetData = new byte[packetDataLength];
-        var packetDataRead = await stream.ReadAsync(packetData);
+        var packetDataRead = await stream.ReadAsync(packetData, token);
 
         if (packetDataRead != packetDataLength)
         {
@@ -52,7 +55,7 @@ public class NetworkPacketSerializer : INetworkPacketSerializer
         return NegumGameContainer.Resolve<IPacketSerializer>().Deserialize(packetData);
     }
 
-    public async Task WriteAsync(Stream stream, IPacket packet)
+    public async Task WriteAsync(Stream stream, IPacket packet, CancellationToken token = default)
     {
         var packetData = NegumGameContainer.Resolve<IPacketSerializer>().Serialize(packet);
         var lengthBytes = BitConverter.GetBytes(packetData.Length);
@@ -61,6 +64,6 @@ public class NetworkPacketSerializer : INetworkPacketSerializer
         Array.Copy(lengthBytes, packetDataWithLength, lengthBytes.Length);
         Array.Copy(packetData, 0, packetDataWithLength, lengthBytes.Length, packetData.Length);
         
-        await stream.WriteAsync(packetDataWithLength);
+        await stream.WriteAsync(packetDataWithLength, token);
     }
 }

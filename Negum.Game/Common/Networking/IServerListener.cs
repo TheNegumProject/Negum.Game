@@ -1,4 +1,5 @@
 using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
 using Negum.Game.Common.Containers;
 using Negum.Game.Common.Networking.Packets;
@@ -14,14 +15,16 @@ public interface IServerListener
     /// Starts listening for incoming requests.
     /// </summary>
     /// <param name="port">Port which should be used by local server; leave empty for autodetect.</param>
+    /// <param name="token"></param>
     /// <returns></returns>
-    Task StartAsync(int port = default);
+    Task StartAsync(int port = default, CancellationToken token = default);
 
     /// <summary>
     /// Stops the listener.
     /// </summary>
+    /// <param name="token"></param>
     /// <returns></returns>
-    Task StopAsync();
+    Task StopAsync(CancellationToken token = default);
 }
 
 public class ServerListener : IServerListener
@@ -29,7 +32,7 @@ public class ServerListener : IServerListener
     private bool Running { get; set; }
     private TcpListener? Server { get; set; }
     
-    public async Task StartAsync(int port = default)
+    public async Task StartAsync(int port = default, CancellationToken token = default)
     {
         if (Running)
         {
@@ -46,30 +49,30 @@ public class ServerListener : IServerListener
 
         while (Running)
         {
-            using var client = await Server.AcceptTcpClientAsync();
-            await Task.Run(async () => await HandleClientAsync(client));
+            using var client = await Server.AcceptTcpClientAsync(token);
+            await Task.Run(async () => await HandleClientAsync(client, token), token);
         }
     }
 
-    public Task StopAsync()
+    public Task StopAsync(CancellationToken token = default)
     {
         Running = false;
         return Task.CompletedTask;
     }
     
-    private static async Task HandleClientAsync(TcpClient client)
+    private static async Task HandleClientAsync(TcpClient client, CancellationToken token = default)
     {
         var stream = client.GetStream();
         var networkPacketSerializer = NegumGameContainer.Resolve<INetworkPacketSerializer>();
         
         // Process Client Request
 
-        var requestPacket = await networkPacketSerializer.ReadAsync(stream);
-        await NegumGameContainer.Resolve<IPacketProcessor>().ProcessPacketAsync(requestPacket, Side.Server);
+        var requestPacket = await networkPacketSerializer.ReadAsync(stream, token);
+        await NegumGameContainer.Resolve<IPacketProcessor>().ProcessPacketAsync(requestPacket, Side.Server, token);
 
         // Send Response to Client
 
         var responsePacket = new EmptyPacket(); // TODO: Add appropriate response Packet
-        await networkPacketSerializer.WriteAsync(stream, responsePacket);
+        await networkPacketSerializer.WriteAsync(stream, responsePacket, token);
     }
 }

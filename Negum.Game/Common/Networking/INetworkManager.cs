@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using Negum.Game.Common.Containers;
 using Negum.Game.Common.Networking.Packets;
@@ -12,26 +13,21 @@ public interface INetworkManager
     /// <summary>
     /// </summary>
     /// <param name="packet">Packet to be send.</param>
+    /// <param name="token"></param>
     /// <returns></returns>
-    Task SendPacketAsync<TPacket>(TPacket packet)
+    Task SendPacketAsync<TPacket>(TPacket packet, CancellationToken token = default)
         where TPacket : IPacket;
 }
 
 public class NetworkManager : INetworkManager
 {
-    /// <summary>
-    /// Handles Packet for Server and Client.
-    /// </summary>
-    /// <param name="packet"></param>
-    /// <typeparam name="TPacket"></typeparam>
-    /// <returns></returns>
-    public async Task SendPacketAsync<TPacket>(TPacket packet) 
+    public async Task SendPacketAsync<TPacket>(TPacket packet, CancellationToken token = default) 
         where TPacket : IPacket
     {
         // Process Packet - Server
-        await NegumGameContainer.Resolve<IServerConnection>().SendPacketAsync(packet);
+        await NegumGameContainer.Resolve<IServerConnection>().SendPacketAsync(packet, token);
         
         // Process Packet - Client
-        await NegumGameContainer.Resolve<IPacketProcessor>().ProcessPacketAsync(packet, Side.Client);
+        await NegumGameContainer.Resolve<IPacketProcessor>().ProcessPacketAsync(packet, Side.Client, token);
     }
 }

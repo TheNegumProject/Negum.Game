@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Negum.Game.Common.Containers;
 
@@ -14,13 +15,14 @@ public interface IPacketProcessor
     /// </summary>
     /// <param name="packet"></param>
     /// <param name="side"></param>
+    /// <param name="token"></param>
     /// <returns></returns>
-    Task ProcessPacketAsync(IPacket packet, Side side);
+    Task ProcessPacketAsync(IPacket packet, Side side, CancellationToken token = default);
 }
 
 public class PacketProcessor : IPacketProcessor
 {
-    public Task ProcessPacketAsync(IPacket packet, Side side)
+    public Task ProcessPacketAsync(IPacket packet, Side side, CancellationToken token = default)
     {
         const string handleAsyncCallbackName = nameof(IPacketHandler<IPacket>.HandleAsync);
         
@@ -30,7 +32,7 @@ public class PacketProcessor : IPacketProcessor
             .Select(handler =>
             {
                 var handleAsyncCallback = handler.GetType().GetMethod(handleAsyncCallbackName);
-                var result = handleAsyncCallback?.Invoke(handler, new object?[] { packet });
+                var result = handleAsyncCallback?.Invoke(handler, new object?[] { packet, token });
 
                 if (result is null)
                 {

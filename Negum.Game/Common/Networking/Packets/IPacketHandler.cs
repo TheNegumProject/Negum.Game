@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using Negum.Game.Common.Containers;
 
@@ -18,6 +19,7 @@ public interface IPacketHandler<in TPacket>
     /// Handles given packet.
     /// </summary>
     /// <param name="packet">Packet to handle.</param>
+    /// <param name="token"></param>
     /// <returns></returns>
-    Task HandleAsync(TPacket packet);
+    Task HandleAsync(TPacket packet, CancellationToken token = default);
 }

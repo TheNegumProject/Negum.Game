@@ -1,4 +1,5 @@
 using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
 using Negum.Game.Common.Containers;
 using Negum.Game.Common.Networking.Packets;
@@ -14,8 +15,9 @@ public interface IServerConnection
     /// Sends specified Packet to server.
     /// </summary>
     /// <param name="packet">Packet to send.</param>
+    /// <param name="token"></param>
     /// <returns></returns>
-    Task SendPacketAsync(IPacket packet);
+    Task SendPacketAsync(IPacket packet, CancellationToken token = default);
 }
 
 public class ServerConnection : IServerConnection
@@ -27,19 +29,19 @@ public class ServerConnection : IServerConnection
     
     private TcpClient Client { get; }
     
-    public async Task SendPacketAsync(IPacket packet)
+    public async Task SendPacketAsync(IPacket packet, CancellationToken token = default)
     {
         var networkPacketSerializer = NegumGameContainer.Resolve<INetworkPacketSerializer>();
         
         // Send to Server
         
         var serverConfig = NegumGameContainer.Resolve<IServerConfiguration>();
-        await Client.ConnectAsync(serverConfig.HostName, serverConfig.Port);
-        await networkPacketSerializer.WriteAsync(Client.GetStream(), packet);
+        await Client.ConnectAsync(serverConfig.HostName, serverConfig.Port, token);
+        await networkPacketSerializer.WriteAsync(Client.GetStream(), packet, token);
         
         // Process Server Response
         
-        var responsePacket = await networkPacketSerializer.ReadAsync(Client.GetStream());
-        await NegumGameContainer.Resolve<IPacketProcessor>().ProcessPacketAsync(responsePacket, Side.Client);
+        var responsePacket = await networkPacketSerializer.ReadAsync(Client.GetStream(), token);
+        await NegumGameContainer.Resolve<IPacketProcessor>().ProcessPacketAsync(responsePacket, Side.Client, token);
     }
 }
