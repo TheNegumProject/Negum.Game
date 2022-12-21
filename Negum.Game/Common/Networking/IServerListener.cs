@@ -17,49 +17,30 @@ public interface IServerListener
     /// <param name="port">Port which should be used by local server; leave empty for autodetect.</param>
     /// <param name="token"></param>
     /// <returns></returns>
-    Task StartAsync(int port = default, CancellationToken token = default);
-
-    /// <summary>
-    /// Stops the listener.
-    /// </summary>
-    /// <param name="token"></param>
-    /// <returns></returns>
-    Task StopAsync(CancellationToken token = default);
+    Task RunAsync(int port = default, CancellationToken token = default);
 }
 
 public class ServerListener : IServerListener
 {
-    private bool Running { get; set; }
     private TcpListener? Server { get; set; }
     
-    public virtual async Task StartAsync(int port = default, CancellationToken token = default)
+    public virtual async Task RunAsync(int port = default, CancellationToken token = default)
     {
-        if (Running)
-        {
-            return;
-        }
-        
-        Running = true;
-
         var networkHelper = NegumGameContainer.Resolve<INetworkHelper>();
         port = port > 0 ? port : networkHelper.GetNextFreePort();
 
         Server = TcpListener.Create(port);
         Server.Start();
+        
+        NegumGameContainer.Resolve<IServerConfiguration>().ToggleLocalServerRunning();
 
-        while (Running)
+        while (!token.IsCancellationRequested)
         {
             using var client = await Server.AcceptTcpClientAsync(token);
             await HandleClientAsync(client, token);
         }
     }
 
-    public virtual Task StopAsync(CancellationToken token = default)
-    {
-        Running = false;
-        return Task.CompletedTask;
-    }
-    
     private static async Task HandleClientAsync(TcpClient client, CancellationToken token = default)
     {
         var stream = client.GetStream();

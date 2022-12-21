@@ -36,6 +36,13 @@ public class ServerConnection : IServerConnection
         // Send to Server
         
         var serverConfig = NegumGameContainer.Resolve<IServerConfiguration>();
+        
+        // Give local server some time to start
+        while (!serverConfig.IsLocalServerRunning && !token.IsCancellationRequested)
+        {
+            Thread.Sleep(1000);
+        }
+        
         await Client.ConnectAsync(serverConfig.HostName, serverConfig.Port, token);
         await networkPacketSerializer.WriteAsync(Client.GetStream(), packet, token);
         

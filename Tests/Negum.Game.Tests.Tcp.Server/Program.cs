@@ -3,4 +3,4 @@ using Negum.Game.Common.Networking;
 
 await NegumGameContainer
     .Resolve<IServerListener>()
-    .StartAsync();
+    .RunAsync();

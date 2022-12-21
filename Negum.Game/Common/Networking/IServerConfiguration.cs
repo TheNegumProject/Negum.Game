@@ -18,6 +18,11 @@ public interface IServerConfiguration
     /// Port on which client is currently connected.
     /// </summary>
     int Port { get; }
+    
+    /// <summary>
+    /// Indicates whether the local server is up and running.
+    /// </summary>
+    bool IsLocalServerRunning { get; }
 
     /// <summary>
     /// Saves connection details.
@@ -30,12 +35,18 @@ public interface IServerConfiguration
     /// Connects to local server aka localhost.
     /// </summary>
     void ConnectToLocalServer();
+
+    /// <summary>
+    /// Used for setting up flag that local server is running.
+    /// </summary>
+    void ToggleLocalServerRunning();
 }
 
 public class ServerConfiguration : IServerConfiguration
 {
     public string HostName { get; private set; } = "localhost";
     public int Port { get; private set; }
+    public bool IsLocalServerRunning { get; private set; }
 
     /// <summary>
     /// Stores information about local hostname ("localhost" or IP)
@@ -74,4 +85,7 @@ public class ServerConfiguration : IServerConfiguration
 
         Connect(LocalHostName, LocalPort);
     }
+
+    public void ToggleLocalServerRunning() => 
+        IsLocalServerRunning = true;
 }

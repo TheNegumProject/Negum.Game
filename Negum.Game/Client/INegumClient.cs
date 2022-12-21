@@ -18,14 +18,7 @@ public interface INegumClient
     /// <param name="port"></param>
     /// <param name="token"></param>
     /// <returns></returns>
-    Task StartAsync(int port = default, CancellationToken token = default);
-    
-    /// <summary>
-    /// Stops Client and local Server.
-    /// </summary>
-    /// <param name="token"></param>
-    /// <returns></returns>
-    Task StopAsync(CancellationToken token = default);
+    Task RunAsync(int port = default, CancellationToken token = default);
 }
 
 /// <summary>
@@ -34,7 +27,7 @@ public interface INegumClient
 /// </summary>
 public class NegumClient : INegumClient
 {
-    public async Task StartAsync(int port = default, CancellationToken token = default)
+    public async Task RunAsync(int port = default, CancellationToken token = default)
     {
         // Setup configuration for local server by default
         NegumGameContainer.Resolve<IServerConfiguration>().ConnectToLocalServer();
@@ -42,7 +35,7 @@ public class NegumClient : INegumClient
         // Initialize local server thread
         var localServerThread = new Thread(() =>
         {
-            NegumGameContainer.Resolve<INegumServer>().StartAsync(port, token).Wait(token);
+            NegumGameContainer.Resolve<INegumServer>().RunAsync(port, token).Wait(token);
         });
 
         localServerThread.Start();
@@ -52,7 +45,4 @@ public class NegumClient : INegumClient
             .Resolve<INetworkManager>()
             .SendPacketAsync(new InitializeClientPacket(), token);
     }
-
-    public async Task StopAsync(CancellationToken token = default) => 
-        await NegumGameContainer.Resolve<INegumServer>().StopAsync(token);
 }

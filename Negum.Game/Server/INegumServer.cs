@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Negum.Game.Common.Containers;
 using Negum.Game.Common.Networking;
+using Negum.Game.Common.Networking.Packets;
 using Negum.Game.Server.Networking.Packets;
 
 namespace Negum.Game.Server;
@@ -22,27 +23,18 @@ public interface INegumServer
     /// <param name="port"></param>
     /// <param name="token"></param>
     /// <returns></returns>
-    Task StartAsync(int port = default, CancellationToken token = default);
-    
-    /// <summary>
-    /// Stops server (listening loop).
-    /// </summary>
-    /// <param name="token"></param>
-    /// <returns></returns>
-    Task StopAsync(CancellationToken token = default);
+    Task RunAsync(int port = default, CancellationToken token = default);
 }
 
 public class NegumServer : INegumServer
 {
-    public virtual async Task StartAsync(int port = default, CancellationToken token = default)
+    public virtual async Task RunAsync(int port = default, CancellationToken token = default)
     {
+        // Special case when IPacketProcessor is used - we have not yet active server
         await NegumGameContainer
-            .Resolve<INetworkManager>()
-            .SendPacketAsync(new InitializeServerPacket(), token);
+            .Resolve<IPacketProcessor>()
+            .ProcessPacketAsync(new InitializeServerPacket(), Side.Client, token);
         
-        await NegumGameContainer.Resolve<IServerListener>().StartAsync(port, token);
+        await NegumGameContainer.Resolve<IServerListener>().RunAsync(port, token);
     }
-
-    public virtual async Task StopAsync(CancellationToken token = default) => 
-        await NegumGameContainer.Resolve<IServerListener>().StopAsync(token);
 }

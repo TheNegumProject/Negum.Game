@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Negum.Game.Common.Containers;
@@ -10,10 +12,21 @@ namespace Negum.Game.Client;
 public static class NegumClientRunner
 {
     /// <summary>
-    /// Simple wrapper for Client startup procedure.
+    /// Convenient wrapper for Client startup procedure.
     /// </summary>
     /// <param name="port"></param>
     /// <param name="token"></param>
-    public static async Task RunAsync(int port = default, CancellationToken token = default) => 
-        await NegumGameContainer.Resolve<INegumClient>().StartAsync(port, token);
+    /// <param name="assembliesWithPacketHandlers">Additional assemblies with IPacketHandler implementations</param>
+    public static async Task RunAsync(
+        int port = default, 
+        CancellationToken token = default,
+        IEnumerable<Assembly>? assembliesWithPacketHandlers = default)
+    {
+        foreach (var assembly in assembliesWithPacketHandlers ?? new List<Assembly>())
+        {
+            NegumGameContainer.RegisterPacketHandlers(assembly);
+        }
+        
+        await NegumGameContainer.Resolve<INegumClient>().RunAsync(port, token);
+    }
 }

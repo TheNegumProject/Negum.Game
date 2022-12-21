@@ -41,8 +41,9 @@ public class PacketHandlerRegistry : IPacketHandlerRegistry
 
     public virtual IEnumerable<object> GetPacketHandlers(IPacket packet, Side side) =>
         Entries
-            .Single(en => en.Side == side)
-            .GetPacketHandlers(packet);
+            .SingleOrDefault(en => en.Side == side)?
+            .GetPacketHandlers(packet)
+        ?? new List<object>(); // Special case when we don't have local server running yet
 
     private static void ProcessPacketHandlerType(Type packetHandlerClassType)
     {
