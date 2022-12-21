@@ -50,7 +50,7 @@ public class ServerListener : IServerListener
         while (Running)
         {
             using var client = await Server.AcceptTcpClientAsync(token);
-            await Task.Run(async () => await HandleClientAsync(client, token), token);
+            await HandleClientAsync(client, token);
         }
     }
 
