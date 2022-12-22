@@ -21,7 +21,7 @@ public class TestPacket : AbstractPacket
     public string SampleString { get; private set; }
     public int SampleInt { get; private set; }
     public double SampleDouble { get; private set; }
-    
+
     public override void Read(BinaryReader reader)
     {
         SampleString = reader.ReadString();

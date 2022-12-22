@@ -21,11 +21,15 @@ public abstract class AbstractPacket : IPacket
     /// Overrides default Read method providing BinaryReader for easier Stream manipulation.
     /// </summary>
     /// <param name="reader"></param>
-    public abstract void Read(BinaryReader reader);
-        
+    public virtual void Read(BinaryReader reader)
+    {
+    }
+
     /// <summary>
     /// Overrides default Write method providing BinaryWriter for easier Stream manipulation.
     /// </summary>
     /// <param name="writer"></param>
-    public abstract void Write(BinaryWriter writer);
+    public virtual void Write(BinaryWriter writer)
+    {
+    }
 }

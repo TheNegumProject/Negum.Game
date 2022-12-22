@@ -1,4 +1,3 @@
-using System.IO;
 using Negum.Game.Common.Networking.Packets;
 
 namespace Negum.Game.Client.Networking.Packets;
@@ -8,11 +7,4 @@ namespace Negum.Game.Client.Networking.Packets;
 /// </summary>
 public class InitializeClientPacket : AbstractPacket
 {
-    public override void Read(BinaryReader reader)
-    {
-    }
-
-    public override void Write(BinaryWriter writer)
-    {
-    }
 }

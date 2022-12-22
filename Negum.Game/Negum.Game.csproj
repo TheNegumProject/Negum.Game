@@ -19,6 +19,7 @@
 
     <ItemGroup>
       <Folder Include="Client\Networking\Handlers" />
+      <Folder Include="Common\States" />
       <Folder Include="Server\Networking\Handlers" />
     </ItemGroup>
 
