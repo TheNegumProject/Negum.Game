@@ -3,12 +3,16 @@ using System.Reflection;
 using Negum.Core.Containers;
 using Negum.Game.Common.Networking;
 using Negum.Game.Common.Networking.Packets;
+using Negum.Game.Common.States;
 
 namespace Negum.Game.Common.Containers;
 
 /// <summary>
 /// Container used in Negum.Game project. <br />
-/// Contains wrappers for <see cref="NegumContainer"/>.
+/// Contains wrappers for <see cref="NegumContainer"/>. <br />
+/// <br />
+/// NOTE: <br />
+/// Anything inside a Container could be overwritten by registering it again with different settings or implementation.
 /// </summary>
 public static class NegumGameContainer
 {
@@ -22,9 +26,9 @@ public static class NegumGameContainer
         
         // Singletons
         Register<IServerConfiguration, ServerConfiguration>(NegumObjectLifetime.Singleton);
-        Register<IServerConnection, ServerConnection>(NegumObjectLifetime.Singleton);
         Register<IServerListener, ServerListener>(NegumObjectLifetime.Singleton);
         Register<INetworkHelper, NetworkHelper>(NegumObjectLifetime.Singleton);
+        Register<IGameStateProvider, GameStateProvider>(NegumObjectLifetime.Singleton);
     }
     
     /// <summary>

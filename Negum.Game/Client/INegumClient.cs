@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Negum.Game.Client.Networking.Packets;
 using Negum.Game.Common.Containers;
 using Negum.Game.Common.Networking;
+using Negum.Game.Common.States.Packets;
 using Negum.Game.Common.Tasks;
 using Negum.Game.Server;
 
@@ -34,9 +35,10 @@ public class NegumClient : INegumClient
 
         localServerThread.Start();
         
-        // Send initialization Packet
-        await NegumGameContainer
-            .Resolve<INetworkManager>()
-            .SendPacketAsync(new InitializeClientPacket(), token);
+        // Send initialization Packets
+        var networkManager = NegumGameContainer.Resolve<INetworkManager>();
+        
+        await networkManager.SendPacketAsync(new InitializeClientPacket(), token);
+        await networkManager.SendPacketAsync(new SyncStatePacket(), token);
     }
 }

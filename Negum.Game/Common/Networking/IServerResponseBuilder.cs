@@ -1,11 +1,14 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Negum.Game.Common.Containers;
 using Negum.Game.Common.Networking.Packets;
+using Negum.Game.Common.States;
+using Negum.Game.Common.States.Packets;
 
 namespace Negum.Game.Common.Networking;
 
 /// <summary>
-/// Responsible for building response 
+/// Responsible for building Server response. 
 /// </summary>
 public interface IServerResponseBuilder
 {
@@ -22,7 +25,13 @@ public class ServerResponseBuilder : IServerResponseBuilder
 {
     public virtual Task<IPacket> BuildAsync(IPacket packet, CancellationToken token = default)
     {
-        // TODO: Build appropriate response Packet - maybe return EmptyPacket by default or GameState (: IPacket) for SyncPacket (?)
-        return Task.FromResult((IPacket)new EmptyPacket());
+        IPacket responsePacket = new EmptyPacket();
+        
+        if (packet is ISyncStatePacket)
+        {
+            responsePacket = NegumGameContainer.Resolve<IGameStateProvider>().GetGameState();
+        }
+
+        return Task.FromResult(responsePacket);
     }
 }

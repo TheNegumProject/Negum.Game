@@ -22,13 +22,6 @@ public interface IServerConnection
 
 public class ServerConnection : IServerConnection
 {
-    public ServerConnection()
-    {
-        Client = new TcpClient();
-    }
-    
-    private TcpClient Client { get; }
-    
     public virtual async Task SendPacketAsync(IPacket packet, CancellationToken token = default)
     {
         var networkPacketSerializer = NegumGameContainer.Resolve<INetworkPacketSerializer>();
@@ -43,12 +36,17 @@ public class ServerConnection : IServerConnection
             Thread.Sleep(1000);
         }
         
-        await Client.ConnectAsync(serverConfig.HostName, serverConfig.Port, token);
-        await networkPacketSerializer.WriteAsync(Client.GetStream(), packet, token);
+        var client = new TcpClient(serverConfig.HostName, serverConfig.Port);
+        
+        await networkPacketSerializer.WriteAsync(client.GetStream(), packet, token);
         
         // Process Server Response
         
-        var responsePacket = await networkPacketSerializer.ReadAsync(Client.GetStream(), token);
+        var responsePacket = await networkPacketSerializer.ReadAsync(client.GetStream(), token);
         await NegumGameContainer.Resolve<IPacketProcessor>().ProcessPacketAsync(responsePacket, Side.Client, token);
+        
+        // Clean connection
+        
+        client.Close();
     }
 }
